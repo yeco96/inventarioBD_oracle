@@ -3,10 +3,12 @@ create table inventario.articulos
 CONSTRAINT codigoArticulo_PK PRIMARY KEY (codigoArticulo));
 
 create table inventario.Proveedor
-(codigoProveedor NUMBER(6,0), nombre VARCHAR2(20 BYTE), fechaIngreso DATE);
+(codigoProveedor NUMBER(6,0), nombre VARCHAR2(20 BYTE), fechaIngreso DATE,
+CONSTRAINT codigoProveedor_PK PRIMARY KEY (codigoProveedor));
 
 create table inventario.Usuario
-(usuario VARCHAR2(20 BYTE), nombre VARCHAR2(20 BYTE), contrasena password);
+(usuario VARCHAR2(20 BYTE), nombre VARCHAR2(20 BYTE), contrasena password,
+CONSTRAINT usuario_PK PRIMARY KEY (usuario));
 
 create table inventario.articuloPrecio
 (codigoArticulo NUMBER(9,0), precio NUMBER(6,0), tarifaImpuesto NUMBER(6,0), porcentajeUtilidad NUMBER(6,0), montoCosto NUMBER(9,0),
