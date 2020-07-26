@@ -12,11 +12,13 @@ CONSTRAINT usuario_PK PRIMARY KEY (usuario));
 
 create table inventario.articuloPrecio
 (codigoArticulo int, precio NUMBER(18,3), tarifaImpuesto NUMBER(5,3), porcentajeUtilidad NUMBER(5,3), montoCosto NUMBER(18,3),
+CONSTRAINT codigoCompra_PK PRIMARY KEY (codigoArticulo),
 CONSTRAINT codigoArticulo_FK FOREIGN KEY (codigoArticulo)
   REFERENCES inventario.articulos (codigoArticulo) ENABLE);
   
 create table inventario.articuloExistencia
 (codigoArticulo int, existencia NUMBER(18,3),
+CONSTRAINT codigoCompra_PK PRIMARY KEY (codigoArticulo),
 CONSTRAINT codigoArticulo_FK FOREIGN KEY (codigoArticulo)
   REFERENCES inventario.articulos (codigoArticulo) ENABLE);
 
@@ -31,6 +33,7 @@ CONSTRAINT usuarioRegistro_FK FOREIGN KEY (usuarioRegistro)
   
 create table inventario.ComprasDetalle 
 (codigoCompra int,codigoArticulo int, cantidadCompra NUMBER(18,3), montoCosto NUMBER(18,3),
+CONSTRAINT codigoVenta_PK PRIMARY KEY (codigoCompra, codigoArticulo),
 CONSTRAINT codigoCompra_FK FOREIGN KEY (codigoCompra)
   REFERENCES inventario.Compras (codigoCompra) ENABLE,
 CONSTRAINT codigoArticulo_FK FOREIGN KEY (codigoArticulo)
@@ -44,6 +47,7 @@ CONSTRAINT usuarioRegistro_FK FOREIGN KEY (usuarioRegistro)
   
 create table inventario.VentasDetalle 
 (codigoVenta int, codigoArticulo int, precio  NUMBER(18,3),
+CONSTRAINT codigoVenta_PK PRIMARY KEY (codigoVenta, codigoArticulo),
 CONSTRAINT codigoVenta_FK FOREIGN KEY (codigoVenta)
   REFERENCES inventario.Ventas (codigoVenta) ENABLE,
 CONSTRAINT codigoArticulo_FK FOREIGN KEY (codigoArticulo)
