@@ -11,25 +11,52 @@ tarifaImpuesto
 porcentajeUtilidad
 montoCosto
 
-
 *ArtiuculoExistencia
 codigoArticulo
 existencia
 
-
 *Compras
+codigoCompra
+fatura
+codigoProveedor
+montoCompra
+fechaCompra
+usuarioRegistro
 
+*ComprasDetalle
+codigoCompra
+codigoArticulo
+cantidadCompra
+montoCosto
 
 *Ventas
+codigoVenta
+fatura
+identificacionCliente
+montoVenta
+fechaVenta
+usuarioRegistro
 
+*VentasDetalle
+codigoVenta
+codigoArticulo
+precio
 
 *Movimientos
-
+codigoArticulo
+concepto
+cantidadAntes
+cantidad
+cantidadDespues
+fechaRegistro
+usuarioRegistro
 
 *Proveedor
-
+codigoProveedor
+nombre
+fechaIngreso
 
 *Usuario
-
-
-*
+usuario
+nombre
+contrasena
