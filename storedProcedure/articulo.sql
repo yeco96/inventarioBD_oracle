@@ -58,16 +58,14 @@ END;
 CREATE OR REPLACE PROCEDURE articulo_update(
     codigoArticulo ARTICULO.CODIGOARTICULO%TYPE,
     descripcion ARTICULO.descripcion%TYPE,
-    cantMinima ARTICULO.cantMinima%TYPE,
-    fechaCreacion ARTICULO.fechaCreacion%TYPE)
+    cantMinima ARTICULO.cantMinima%TYPE)
 AS 
 BEGIN 
  
 UPDATE articulo
 SET  codigoArticulo = codigoArticulo,
      descripcion = descripcion, 
-     cantMinima = cantMinima,
-     fechaCreacion = fechaCreacion
+     cantMinima = cantMinima
 WHERE  codigoArticulo = codigoArticulo;
 COMMIT; 
 END;
