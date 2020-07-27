@@ -1,5 +1,5 @@
 --insert
-CREATE OR REPLACE PROCEDURE usp_insertArticulo (
+CREATE OR REPLACE PROCEDURE articulo_insert (
 	   descripcion ARTICULO.DESCRIPCION%TYPE,
 	   cantidadMinima	ARTICULO.CANTMINIMA%TYPE)
 	 
@@ -29,6 +29,7 @@ VALUES (codigoSiguiente, 0);
  
 COMMIT;  
 END;
+/
 
 --DELETE	 
 
@@ -36,15 +37,16 @@ END;
 --DROP PROCEDURE articuloDelete
 --END; 
 
-CREATE OR REPLACE PROCEDURE articuloDelete( 
-    @CODIGOARTICULO ARTICULO.CODIGOARTICULO%TYPE)
+CREATE OR REPLACE PROCEDURE articulo_delete( 
+    CODIGOARTICULO ARTICULO.CODIGOARTICULO%TYPE)
 AS 
 BEGIN 
 DELETE
 FROM   articulo
-WHERE  CODIGOARTICULO = @CODIGOARTICULO
- 
-END
+WHERE  CODIGOARTICULO = CODIGOARTICULO;
+COMMIT; 
+END;
+/
 
 
 --UPDATE
@@ -53,21 +55,23 @@ END
 --DROP PROCEDURE codigoArticulo_Update
 --END 
 
-CREATE OR REPLACE PROCEDURE codigoArticulo_Update(
-    @codigoArticulo ARTICULO.CODIGOARTICULO%TYPE,
-    @descripcion ARTICULO.descripcion%TYPE(40 BYTE),
-    @cantMinima ARTICULO.cantMinima%TYPE,
-    @fechaCreacion ARTICULO.fechaCreacion%TYPE)
+CREATE OR REPLACE PROCEDURE articulo_update(
+    codigoArticulo ARTICULO.CODIGOARTICULO%TYPE,
+    descripcion ARTICULO.descripcion%TYPE,
+    cantMinima ARTICULO.cantMinima%TYPE,
+    fechaCreacion ARTICULO.fechaCreacion%TYPE)
 AS 
 BEGIN 
  
 UPDATE articulo
-SET  codigoArticulo = @codigoArticulo,
-     descripcion = @descripcion, 
-     cantMinima = @cantMinima,
-     fechaCreacion = @fechaCreacion
-WHERE  codigoArticulo = @codigoArticulo
-END
+SET  codigoArticulo = codigoArticulo,
+     descripcion = descripcion, 
+     cantMinima = cantMinima,
+     fechaCreacion = fechaCreacion
+WHERE  codigoArticulo = codigoArticulo;
+COMMIT; 
+END;
+/
 
 
 -- READ
@@ -76,14 +80,17 @@ END
 --    DROP PROCEDURE articuloRead
 --END 
 
-CREATE OR REPLACE PROCEDURE articuloRead(
-    @codigoArticulo ARTICULO.CODIGOARTICULO%TYPE)
+CREATE OR REPLACE PROCEDURE articulo_Read(
+    codigoArticulo ARTICULO.CODIGOARTICULO%TYPE,
+    articulo_read OUT SYS_REFCURSOR)
 AS 
 BEGIN 
  
-    SELECT codigoArticulo, descripcion, cantMinima, fechaCreacion
+    OPEN articulo_read for SELECT codigoArticulo, descripcion, cantMinima, fechaCreacion
     FROM   articulo  
-    WHERE  (codigoArticulo = @codigoArticulo) 
-END
+    WHERE  (codigoArticulo = codigoArticulo);
+COMMIT; 
+END;
+/
 
 
