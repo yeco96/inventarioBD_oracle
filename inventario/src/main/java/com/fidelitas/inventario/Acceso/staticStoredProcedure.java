@@ -12,11 +12,21 @@ package com.fidelitas.inventario.Acceso;
 public class staticStoredProcedure {
 
     public static class articulo {
-        public static final String insertar  = "{call usp_insertArticulo(?,?)}";
+
+        public static final String insertar = "{call usp_insertArticulo(?,?)}";
     }
-    
-     public static class usuario {
-        public static final String loggin  = "{call usp_insertArticulo(?,?)}";
+
+    public static class usuario {
+
+        public static final String loggin = "{call usp_insertArticulo(?,?)}";
+    }
+
+    public static class proveedor {
+
+        public static final String insertar = "{call proveedor_insert(?)}";
+        public static final String eliminar = "{call proveedor_delete(?)}";
+        public static final String actualizar = "{call proveedor_update(?)}";
+        public static final String consultar = "{call proveedor_Read(?)}";
     }
 
 }
