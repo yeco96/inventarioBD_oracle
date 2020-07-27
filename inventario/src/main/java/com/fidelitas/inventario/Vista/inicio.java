@@ -5,6 +5,8 @@
  */
 package com.fidelitas.inventario.Vista;
 
+import com.fidelitas.inventario.Controlador.UsuarioDao;
+import com.fidelitas.inventario.Modelo.Usuario;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import javax.swing.ImageIcon;
@@ -27,7 +29,7 @@ public class inicio extends javax.swing.JFrame {
 
             String rootPath = Thread.currentThread().getContextClassLoader().getResource("").getPath();
             String IMG = rootPath + "top-bg.jpg";
-            
+
             ImageIcon Img = new ImageIcon(IMG);
             grafico.drawImage(Img.getImage(), 0, 0, height.width, height.height, null);
             setOpaque(false);
@@ -62,15 +64,16 @@ public class inicio extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         jButton5 = new javax.swing.JButton();
-        txt = new javax.swing.JTextField();
+        txt_contrasena = new javax.swing.JTextField();
         jLabel7 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
-        txt1 = new javax.swing.JTextField();
+        txt_usuario = new javax.swing.JTextField();
         jPanel1 = new javax.swing.JPanel();
         jPanel2 = new javax.swing.JPanel();
         jButton4 = new javax.swing.JButton();
         jPanel3 = new javax.swing.JPanel();
         jPanel4 = new javax.swing.JPanel();
+        mensajeError = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -97,22 +100,22 @@ public class inicio extends javax.swing.JFrame {
             }
         });
 
-        txt.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
-        txt.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        txt.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
-        txt.addFocusListener(new java.awt.event.FocusAdapter() {
+        txt_contrasena.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
+        txt_contrasena.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        txt_contrasena.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        txt_contrasena.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusLost(java.awt.event.FocusEvent evt) {
-                txtFocusLost(evt);
+                txt_contrasenaFocusLost(evt);
             }
         });
-        txt.addActionListener(new java.awt.event.ActionListener() {
+        txt_contrasena.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtActionPerformed(evt);
+                txt_contrasenaActionPerformed(evt);
             }
         });
-        txt.addKeyListener(new java.awt.event.KeyAdapter() {
+        txt_contrasena.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyTyped(java.awt.event.KeyEvent evt) {
-                txtKeyTyped(evt);
+                txt_contrasenaKeyTyped(evt);
             }
         });
 
@@ -124,12 +127,12 @@ public class inicio extends javax.swing.JFrame {
         jLabel5.setForeground(new java.awt.Color(255, 255, 255));
         jLabel5.setText("Usuario:");
 
-        txt1.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
-        txt1.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        txt1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
-        txt1.addKeyListener(new java.awt.event.KeyAdapter() {
+        txt_usuario.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
+        txt_usuario.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        txt_usuario.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        txt_usuario.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyTyped(java.awt.event.KeyEvent evt) {
-                txt1KeyTyped(evt);
+                txt_usuarioKeyTyped(evt);
             }
         });
 
@@ -174,7 +177,7 @@ public class inicio extends javax.swing.JFrame {
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 9, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
@@ -208,6 +211,8 @@ public class inicio extends javax.swing.JFrame {
                 .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
+        mensajeError.setText("....");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -227,8 +232,8 @@ public class inicio extends javax.swing.JFrame {
                                 .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
                                     .addGap(146, 146, 146)
                                     .addComponent(jLabel7))
-                                .addComponent(txt1, javax.swing.GroupLayout.PREFERRED_SIZE, 400, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(txt, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 404, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addComponent(txt_usuario, javax.swing.GroupLayout.PREFERRED_SIZE, 400, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(txt_contrasena, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 404, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 139, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jButton5, javax.swing.GroupLayout.PREFERRED_SIZE, 139, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -236,6 +241,10 @@ public class inicio extends javax.swing.JFrame {
                 .addContainerGap(150, Short.MAX_VALUE))
             .addComponent(jPanel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addComponent(jPanel3, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(mensajeError)
+                .addGap(461, 461, 461))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -253,39 +262,54 @@ public class inicio extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(jLabel5)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(txt1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(txt_usuario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(8, 8, 8)
                         .addComponent(jLabel7)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(txt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(txt_contrasena, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
                         .addComponent(jButton5, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 14, Short.MAX_VALUE)
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(mensajeError)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 12, Short.MAX_VALUE)
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
+
+        mensajeError.getAccessibleContext().setAccessibleDescription("");
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
-        
+
+        Usuario user = new Usuario();
+        user.setUsuario(txt_usuario.getText());
+        user.setContrasena(txt_contrasena.getText());
+        if (UsuarioDao.loggin(user)) {
+            this.setVisible(false);
+            menu ocb = new menu();
+            ocb.setVisible(true);
+        } else {
+            mensajeError.setText("Usuario o contraseña invalidos");
+        }
     }//GEN-LAST:event_jButton5ActionPerformed
 
-    private void txtFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtFocusLost
+    private void txt_contrasenaFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txt_contrasenaFocusLost
 
-    }//GEN-LAST:event_txtFocusLost
+    }//GEN-LAST:event_txt_contrasenaFocusLost
 
-    private void txtActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtActionPerformed
+    private void txt_contrasenaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt_contrasenaActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_txtActionPerformed
+    }//GEN-LAST:event_txt_contrasenaActionPerformed
 
-    private void txtKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtKeyTyped
-        
-    }//GEN-LAST:event_txtKeyTyped
+    private void txt_contrasenaKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_contrasenaKeyTyped
 
-    private void txt1KeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt1KeyTyped
-       
-    }//GEN-LAST:event_txt1KeyTyped
+    }//GEN-LAST:event_txt_contrasenaKeyTyped
+
+    private void txt_usuarioKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_usuarioKeyTyped
+
+    }//GEN-LAST:event_txt_usuarioKeyTyped
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
         try {
@@ -344,7 +368,8 @@ public class inicio extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
-    private javax.swing.JTextField txt;
-    private javax.swing.JTextField txt1;
+    private javax.swing.JLabel mensajeError;
+    private javax.swing.JTextField txt_contrasena;
+    private javax.swing.JTextField txt_usuario;
     // End of variables declaration//GEN-END:variables
 }
