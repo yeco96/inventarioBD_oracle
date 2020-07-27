@@ -13,12 +13,12 @@ public class staticStoredProcedure {
 
     public static class articulo {
 
-        public static final String insertar = "{call usp_insertArticulo(?,?)}";
+        public static final String insertar = "{call articulo_insert(?,?)}";
     }
 
     public static class usuario {
 
-        public static final String loggin = "{call usp_insertArticulo(?,?)}";
+        public static final String loggin = "{call articulo_insert(?,?)}";
     }
 
     public static class proveedor {
