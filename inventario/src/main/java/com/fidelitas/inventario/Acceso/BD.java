@@ -54,6 +54,12 @@ public class BD {
         }
     }
 
+    public void validarEstado() {
+        if (conn != null) {
+            System.out.println("INICIO!");
+        }
+    }
+
     public CallableStatement storedProcedure(String metodo) {
         try {
             return conn.prepareCall(metodo);

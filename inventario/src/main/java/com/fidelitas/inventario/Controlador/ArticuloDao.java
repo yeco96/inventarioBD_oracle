@@ -17,7 +17,7 @@ import java.util.logging.Logger;
  *
  * @author yeiso
  */
-public class ArticuloDao {
+public class ArticuloDao implements CRUD {
 
     public static boolean insertar(Articulo articulo) {
         try {

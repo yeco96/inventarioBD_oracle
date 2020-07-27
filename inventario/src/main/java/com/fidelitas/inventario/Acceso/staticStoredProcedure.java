@@ -18,7 +18,7 @@ public class staticStoredProcedure {
 
     public static class usuario {
 
-        public static final String loggin = "{call articulo_insert(?,?)}";
+        public static final String loggin = "{call usuario_loggin(?,?,?)}";
     }
 
     public static class proveedor {

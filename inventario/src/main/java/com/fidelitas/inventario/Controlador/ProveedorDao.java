@@ -7,10 +7,11 @@ package com.fidelitas.inventario.Controlador;
 
 import com.fidelitas.inventario.Acceso.BD;
 import com.fidelitas.inventario.Acceso.staticStoredProcedure;
-
+import com.fidelitas.inventario.Modelo.Interfaces.CRUD;
 import com.fidelitas.inventario.Modelo.Proveedor;
 import java.sql.CallableStatement;
 import java.sql.SQLException;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -18,9 +19,10 @@ import java.util.logging.Logger;
  *
  * @author yeiso
  */
-public class ProveedorDao {
+public class ProveedorDao implements CRUD<Proveedor> {
 
-    public static boolean insertar(Proveedor proveedor) {
+    @Override
+    public boolean insertar(Proveedor proveedor) {
         try {
             BD bd = new BD();
             CallableStatement storedProcedure = bd.storedProcedure(staticStoredProcedure.proveedor.insertar);
@@ -33,7 +35,8 @@ public class ProveedorDao {
         }
     }
 
-    public static boolean actualizar(Proveedor proveedor) {
+    @Override
+    public boolean actualizar(Proveedor proveedor) {
         try {
             BD bd = new BD();
             CallableStatement storedProcedure = bd.storedProcedure(staticStoredProcedure.proveedor.actualizar);
@@ -46,7 +49,8 @@ public class ProveedorDao {
         }
     }
 
-    public static boolean eliminar(Proveedor proveedor) {
+    @Override
+    public boolean eliminar(Proveedor proveedor) {
         try {
             BD bd = new BD();
             CallableStatement storedProcedure = bd.storedProcedure(staticStoredProcedure.proveedor.eliminar);
@@ -57,5 +61,10 @@ public class ProveedorDao {
             Logger.getLogger(ArticuloDao.class.getName()).log(Level.SEVERE, null, ex);
             return false;
         }
+    }
+
+    @Override
+    public List<Proveedor> leer() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 }
