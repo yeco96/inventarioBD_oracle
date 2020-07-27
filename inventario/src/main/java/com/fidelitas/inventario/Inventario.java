@@ -7,6 +7,7 @@ package com.fidelitas.inventario;
 
 
 import com.fidelitas.inventario.Vista.inicio;
+import com.fidelitas.inventario.Acceso.BD;
 /**
  *
  * @author yeiso
@@ -17,6 +18,10 @@ public class Inventario {
        
         inicio start = new inicio();
         start.setVisible(true);
+        
+        BD bd = new BD();
+        bd.conect();
+        
     
     }
     
