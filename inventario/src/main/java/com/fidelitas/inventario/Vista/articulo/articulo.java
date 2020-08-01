@@ -49,6 +49,7 @@ public class articulo extends javax.swing.JFrame {
         jPanel4 = new javax.swing.JPanel();
         jPanel5 = new javax.swing.JPanel();
         jB_BorrarArt = new javax.swing.JButton();
+        mensajeError = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -207,6 +208,11 @@ public class articulo extends javax.swing.JFrame {
             }
         });
 
+        mensajeError.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        mensajeError.setForeground(new java.awt.Color(255, 255, 255));
+        mensajeError.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        mensajeError.setText(" ");
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -237,7 +243,11 @@ public class articulo extends javax.swing.JFrame {
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addContainerGap()
                         .addComponent(jB_Buscar, javax.swing.GroupLayout.PREFERRED_SIZE, 202, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(mensajeError, javax.swing.GroupLayout.PREFERRED_SIZE, 331, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(50, 50, 50)))
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 492, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
             .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -265,7 +275,8 @@ public class articulo extends javax.swing.JFrame {
                             .addComponent(jB_BorrarArt, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(jB_Buscar, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, Short.MAX_VALUE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(mensajeError, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 344, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -293,9 +304,9 @@ public class articulo extends javax.swing.JFrame {
 
         ArticuloDao articuloDao = new ArticuloDao();
         if (articuloDao.insertar(articulo)) {
-            JOptionPane.showMessageDialog(null, "Articulo insertado correctamente");
+            mensajeError.setText("Articulo insertado correctamente");
         } else {
-            JOptionPane.showMessageDialog(null, "Error al insertar");
+            mensajeError.setText("Error al insertar");
         }
        // Articulo articulo = new Articulo();
 //        articulo.setDescripcion("nuevo");
@@ -319,12 +330,15 @@ public class articulo extends javax.swing.JFrame {
     private void jB_BorrarArtActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jB_BorrarArtActionPerformed
 
         Integer a = Integer.parseInt(JOptionPane.showInputDialog("Ingrese el codigo del articulo:"));
-
+        Articulo art = new Articulo();
+        art.setCodigoArticulo(a);
+        
         ArticuloDao articuloDao = new ArticuloDao();
-        if (articuloDao.eliminar(a)) {
-            JOptionPane.showMessageDialog(null, "Articulo eliminado correctamente");
+      
+        if (articuloDao.eliminar(art)) {
+            mensajeError.setText("Articulo eliminado correctamente");
         } else {
-            JOptionPane.showMessageDialog(null, "Error al eliminar");
+            mensajeError.setText("Error al eliminar");
         }
     }//GEN-LAST:event_jB_BorrarArtActionPerformed
 
@@ -344,6 +358,7 @@ public class articulo extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel5;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTableArticul;
+    private javax.swing.JLabel mensajeError;
     private javax.swing.JTextField txt_DescripcionArt;
     private javax.swing.JTextField txt_cantMinArtic;
     // End of variables declaration//GEN-END:variables
