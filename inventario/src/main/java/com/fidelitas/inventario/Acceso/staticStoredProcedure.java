@@ -14,6 +14,9 @@ public class staticStoredProcedure {
     public static class articulo {
 
         public static final String insertar = "{call articulo_insert(?,?)}";
+        public static final String eliminar = "{call articulo_delete(?)}";
+        public static final String actualizar = "{call articulo_update(?,?,?)}";
+        public static final String consultar = "{call articulo_Read(?)}";
     }
 
     public static class usuario {
