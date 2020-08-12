@@ -7,7 +7,9 @@ package com.fidelitas.inventario.Vista;
 
 import com.fidelitas.inventario.Controlador.ArticuloDao;
 import com.fidelitas.inventario.Modelo.Articulo;
+import com.fidelitas.inventario.Vista.Compra.compra;
 import com.fidelitas.inventario.Vista.Proveedor.proveedor;
+import com.fidelitas.inventario.Vista.Venta.Venta;
 import com.fidelitas.inventario.Vista.articulo.articulo;
 import java.math.BigDecimal;
 
@@ -46,6 +48,8 @@ public class menu extends javax.swing.JFrame {
         jPanel8 = new javax.swing.JPanel();
         jButton3 = new javax.swing.JButton();
         jButton6 = new javax.swing.JButton();
+        jBtnVenta = new javax.swing.JButton();
+        jBtnCompra = new javax.swing.JButton();
 
         jPanel1.setBackground(new java.awt.Color(11, 51, 63));
 
@@ -123,7 +127,6 @@ public class menu extends javax.swing.JFrame {
         );
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setPreferredSize(new java.awt.Dimension(943, 444));
 
         jPanel5.setBackground(new java.awt.Color(11, 51, 63));
 
@@ -222,6 +225,28 @@ public class menu extends javax.swing.JFrame {
             }
         });
 
+        jBtnVenta.setBackground(new java.awt.Color(240, 191, 0));
+        jBtnVenta.setFont(new java.awt.Font("Franklin Gothic Demi Cond", 1, 18)); // NOI18N
+        jBtnVenta.setForeground(new java.awt.Color(255, 255, 255));
+        jBtnVenta.setText("Venta");
+        jBtnVenta.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 255, 255)));
+        jBtnVenta.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jBtnVentaActionPerformed(evt);
+            }
+        });
+
+        jBtnCompra.setBackground(new java.awt.Color(240, 191, 0));
+        jBtnCompra.setFont(new java.awt.Font("Franklin Gothic Demi Cond", 1, 18)); // NOI18N
+        jBtnCompra.setForeground(new java.awt.Color(255, 255, 255));
+        jBtnCompra.setText("Compra");
+        jBtnCompra.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 255, 255)));
+        jBtnCompra.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jBtnCompraActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -231,9 +256,13 @@ public class menu extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGap(55, 55, 55)
                 .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 178, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
+                .addGap(30, 30, 30)
                 .addComponent(jButton6, javax.swing.GroupLayout.PREFERRED_SIZE, 178, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(28, 28, 28)
+                .addComponent(jBtnCompra, javax.swing.GroupLayout.PREFERRED_SIZE, 178, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jBtnVenta, javax.swing.GroupLayout.PREFERRED_SIZE, 178, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(81, 81, 81))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -242,7 +271,9 @@ public class menu extends javax.swing.JFrame {
                 .addGap(44, 44, 44)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton6, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jBtnVenta, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jButton6, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jBtnCompra, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 263, Short.MAX_VALUE)
                 .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
@@ -281,8 +312,26 @@ public class menu extends javax.swing.JFrame {
         ocb.setVisible(true);
     }//GEN-LAST:event_jButton6ActionPerformed
 
+    private void jBtnVentaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnVentaActionPerformed
+        Venta v = new Venta();
+        v.setVisible(true);
+        v.setResizable(false);
+        this.dispose();
+    }//GEN-LAST:event_jBtnVentaActionPerformed
+
+    private void jBtnCompraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnCompraActionPerformed
+        compra c = new compra();
+        c.setVisible(true);
+        c.setResizable(false);
+        this.dispose();
+       
+        
+    }//GEN-LAST:event_jBtnCompraActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton jBtnCompra;
+    private javax.swing.JButton jBtnVenta;
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
     private javax.swing.JButton jButton5;
