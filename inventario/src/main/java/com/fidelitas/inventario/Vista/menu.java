@@ -313,16 +313,19 @@ public class menu extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton6ActionPerformed
 
     private void jBtnVentaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnVentaActionPerformed
+        //this.setVisible(false);
         Venta v = new Venta();
-        v.setVisible(true);
         v.setResizable(false);
+        v.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_jBtnVentaActionPerformed
 
     private void jBtnCompraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnCompraActionPerformed
+       
+        //this.setVisible(false);
         compra c = new compra();
-        c.setVisible(true);
         c.setResizable(false);
+        c.setVisible(true);
         this.dispose();
        
         
