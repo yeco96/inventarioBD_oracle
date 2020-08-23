@@ -16,7 +16,7 @@ public class staticStoredProcedure {
         public static final String insertar = "{call articulo_insert(?,?)}";
         public static final String eliminar = "{call articulo_delete(?)}";
         public static final String actualizar = "{call articulo_update(?,?,?)}";
-        public static final String consultar = "{call articulo_Read(?)}";
+        public static final String leer = "{call articulo_Read(?)}";
     }
 
     public static class usuario {
@@ -29,7 +29,7 @@ public class staticStoredProcedure {
         public static final String insertar = "{call proveedor_insert(?)}";
         public static final String eliminar = "{call proveedor_delete(?)}";
         public static final String actualizar = "{call proveedor_update(?)}";
-        public static final String consultar = "{call proveedor_Read(?)}";
+        public static final String leer = "{call proveedor_Read(?, ?)}";
     }
 
 }

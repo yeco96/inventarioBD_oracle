@@ -7,21 +7,35 @@ package com.fidelitas.inventario.Vista.Proveedor;
 
 import com.fidelitas.inventario.Controlador.ProveedorDao;
 import com.fidelitas.inventario.Modelo.Proveedor;
+import com.fidelitas.inventario.Utilidades.Render;
 import com.fidelitas.inventario.Vista.menu;
+import java.awt.Color;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JButton;
 import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+import javax.xml.parsers.ParserConfigurationException;
+import org.xml.sax.SAXException;
 
 /**
  *
  * @author yeiso
  */
 public class proveedor extends javax.swing.JFrame {
-
+ static ArrayList<String> datos = new ArrayList<String>();
     /**
      * Creates new form proveedor
      */
     public proveedor() {
         initComponents();
         this.setLocationRelativeTo(null);
+        this.getContentPane().setBackground(Color.WHITE);
+        
+        this.cargarDatos();
     }
 
     /**
@@ -143,7 +157,7 @@ public class proveedor extends javax.swing.JFrame {
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 933, Short.MAX_VALUE)
+            .addComponent(jPanel2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 943, Short.MAX_VALUE)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -201,9 +215,7 @@ public class proveedor extends javax.swing.JFrame {
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 492, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
             .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addComponent(jPanel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -269,9 +281,109 @@ public class proveedor extends javax.swing.JFrame {
 
     private void jTable1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable1MouseClicked
 
+        try {
+            int colum = jTable1.getColumnModel().getColumnIndexAtX(evt.getX());
+            int row = evt.getY() / jTable1.getRowHeight();
+
+            if (row < jTable1.getRowCount() && row >= 0 && colum < jTable1.getColumnCount() && colum >= 0) {
+
+                Object value = jTable1.getValueAt(row, colum);
+                if (value instanceof JButton) {
+                    ((JButton) value).doClick();
+                    JButton boton = (JButton) value;
+
+                    if (boton.getName().equals("m")) {
+                        // System.out.println(String.valueOf(jTable1.getValueAt(jTable1.getSelectedRow(), 0)));
+                        String elementoViejo1 = String.valueOf(jTable1.getValueAt(jTable1.getSelectedRow(), 0)),
+                                elementoNuevo1;
+
+                        elementoNuevo1 = JOptionPane.showInputDialog(null, "Ingrese la nueva Moneda: ");
+                        if (!elementoNuevo1.equals(" ")) {
+                           String a = "MENSAJE";
+                            JOptionPane.showMessageDialog(null, a);
+                            cargarDatos();
+                        } else {
+                            JOptionPane.showMessageDialog(null, "Por favor, Dígite la información solicitada");
+                        }
+
+                    }
+                    if (boton.getName().equals("e")) {
+                        String[] menu = {"Si", "No"};
+                        int opcion = JOptionPane.showOptionDialog(
+                                null, "¿Desea eliminar " + String.valueOf(jTable1.getValueAt(jTable1.getSelectedRow(), 0)) + " del catálogo", "catálogo de Moneda", JOptionPane.DEFAULT_OPTION, JOptionPane.DEFAULT_OPTION, null, menu, null
+                        );
+                        switch (opcion) {
+                            case 0:
+                                // System.out.println(String.valueOf(jTable1.getValueAt(jTable1.getSelectedRow(), 0)));
+                                String a = "MENSAJE";
+                                JOptionPane.showMessageDialog(null, a);
+                                cargarDatos();
+                                break;
+                            case 1:
+
+                                break;
+                            default:
+                                JOptionPane.showMessageDialog(null, "Opcion invalida !"); // por si digita algo incorrecto
+                                break;
+                        }
+                    }
+                }
+
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, e);
+        }
+
 
     }//GEN-LAST:event_jTable1MouseClicked
 
+     public void cargarDatos() {
+         ProveedorDao proveedorDao = new ProveedorDao();
+         List<Proveedor> proveedors = proveedorDao.leer();
+         
+        datos.removeAll(datos);
+        this.setLocationRelativeTo(null);
+
+
+        jTable1.setDefaultRenderer(Object.class, new Render());
+        JButton btn1 = new JButton("Modificar");
+        btn1.setName("m");
+        Color color1 = new Color(199, 80, 80);
+        Color color2 = new Color(17, 128, 170);
+        btn1.setBackground(color2);
+        btn1.setForeground(Color.white);
+        JButton btn2 = new JButton("Eliminar");
+        btn2.setName("e");
+        btn2.setBackground(color1);
+        btn2.setForeground(Color.white);
+        String[] columnNames = {"Codigo", "Nombre", "Fecha", "", ""};
+
+        DefaultTableModel tableModel = new DefaultTableModel() {
+            @Override
+            public boolean isCellEditable(int row, int column) {
+                return false;
+            }
+        };
+
+        tableModel.setColumnIdentifiers(columnNames);
+
+        Object[] datosObejto = new Object[5];
+        proveedors.forEach((t) -> {
+            datosObejto[0] = t.getCodigoProveedor();
+            datosObejto[1] = t.getNombre();
+            datosObejto[2] = t.getFechaIngreso();
+            datosObejto[3] = btn1;
+            datosObejto[4] = btn2;
+            tableModel.addRow(datosObejto);
+        });
+        
+        jTable1.setModel(tableModel);
+
+        jTable1.setRowHeight(30);
+
+    }
+              
+    
    
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton2;

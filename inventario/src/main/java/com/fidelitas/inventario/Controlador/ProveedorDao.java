@@ -10,10 +10,13 @@ import com.fidelitas.inventario.Acceso.staticStoredProcedure;
 import com.fidelitas.inventario.Modelo.Interfaces.CRUD;
 import com.fidelitas.inventario.Modelo.Proveedor;
 import java.sql.CallableStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import oracle.jdbc.OracleTypes;
 
 /**
  *
@@ -65,6 +68,27 @@ public class ProveedorDao implements CRUD<Proveedor> {
 
     @Override
     public List<Proveedor> leer() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        try {
+            BD bd = new BD();
+            CallableStatement storedProcedure = bd.storedProcedure(staticStoredProcedure.proveedor.leer);
+            storedProcedure.setString(1, "1");
+            storedProcedure.registerOutParameter(2, OracleTypes.CURSOR);
+            storedProcedure.executeQuery();
+
+            // List<Proveedor> resultSet = (List<Proveedor>) storedProcedure.getObject(2);
+            ResultSet rs = (ResultSet) storedProcedure.getObject(2);
+
+            List<Proveedor> listaProveedor = new ArrayList<>();
+            while (rs.next()) {
+                Proveedor p = new Proveedor();
+                p.setALL(rs.getInt("codigoProveedor"), rs.getString("nombre"), rs.getDate("fechaIngreso"));
+                listaProveedor.add(p);
+            }
+            
+            return listaProveedor;
+        } catch (SQLException ex) {
+            Logger.getLogger(ArticuloDao.class.getName()).log(Level.SEVERE, null, ex);
+            return null;
+        }
     }
 }

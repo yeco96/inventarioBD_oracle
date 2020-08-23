@@ -18,6 +18,12 @@ public class Proveedor {
     private String nombre;
     private Date fechaIngreso;
 
+    public void setALL(int codigoProveedor, String nombre, Date fechaIngreso) {
+        this.codigoProveedor = codigoProveedor;
+        this.nombre = nombre;
+        this.fechaIngreso = fechaIngreso;
+    }
+
     public int getCodigoProveedor() {
         return codigoProveedor;
     }
