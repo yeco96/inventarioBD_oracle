@@ -115,6 +115,11 @@ public class inicio extends javax.swing.JFrame {
         txt_usuario.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
         txt_usuario.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         txt_usuario.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        txt_usuario.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txt_usuarioActionPerformed(evt);
+            }
+        });
         txt_usuario.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyTyped(java.awt.event.KeyEvent evt) {
                 txt_usuarioKeyTyped(evt);
@@ -298,6 +303,10 @@ public class inicio extends javax.swing.JFrame {
         }
 
     }//GEN-LAST:event_jButton4ActionPerformed
+
+    private void txt_usuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt_usuarioActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txt_usuarioActionPerformed
 
     
 
