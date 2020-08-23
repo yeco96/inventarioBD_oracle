@@ -52,7 +52,6 @@ public class proveedor extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         txt_nombreProveedor = new javax.swing.JTextField();
         jButton3 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
         jPanel3 = new javax.swing.JPanel();
         jPanel4 = new javax.swing.JPanel();
         jPanel1 = new javax.swing.JPanel();
@@ -85,17 +84,6 @@ public class proveedor extends javax.swing.JFrame {
         jButton3.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton3ActionPerformed(evt);
-            }
-        });
-
-        jButton2.setBackground(new java.awt.Color(11, 51, 63));
-        jButton2.setFont(new java.awt.Font("Franklin Gothic Demi Cond", 1, 18)); // NOI18N
-        jButton2.setForeground(new java.awt.Color(255, 255, 255));
-        jButton2.setText("BUSCAR");
-        jButton2.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 255, 255)));
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
             }
         });
 
@@ -204,15 +192,13 @@ public class proveedor extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(36, 36, 36)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                        .addComponent(jButton3, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 378, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGroup(layout.createSequentialGroup()
-                            .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(txt_nombreProveedor, javax.swing.GroupLayout.PREFERRED_SIZE, 303, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 378, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                    .addComponent(jButton3, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 378, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(txt_nombreProveedor, javax.swing.GroupLayout.PREFERRED_SIZE, 303, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 27, Short.MAX_VALUE)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 492, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
@@ -236,9 +222,7 @@ public class proveedor extends javax.swing.JFrame {
                             .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 21, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 69, Short.MAX_VALUE)
                         .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(78, 78, 78)))
+                        .addGap(129, 129, 129)))
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
@@ -265,16 +249,12 @@ public class proveedor extends javax.swing.JFrame {
         ProveedorDao proveedorDao = new ProveedorDao();
         String[] callback = new String[1];
         if (proveedorDao.insertar(proveedor, callback)) {
-            JOptionPane.showMessageDialog(null, "Proveedor insertado correctamente");
+            JOptionPane.showMessageDialog(null, callback[0]);
         } else {
-            JOptionPane.showMessageDialog(null, "Error al insertar");
+            JOptionPane.showMessageDialog(null, callback[0], "Error", JOptionPane.ERROR_MESSAGE);
         }
-
+        cargarDatos();
     }//GEN-LAST:event_jButton3ActionPerformed
-
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-
-    }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
         menu ocb2 = new menu();
@@ -313,20 +293,29 @@ public class proveedor extends javax.swing.JFrame {
                     if (boton.getName().equals("e")) {
                         String[] menu = {"Si", "No"};
                         int opcion = JOptionPane.showOptionDialog(
-                                null, "¿Desea eliminar " + String.valueOf(jTable1.getValueAt(jTable1.getSelectedRow(), 0)) + " del catálogo", "catálogo de Moneda", JOptionPane.DEFAULT_OPTION, JOptionPane.DEFAULT_OPTION, null, menu, null
+                                null, "¿Desea eliminar el registro?", "catálogo de proveedor", JOptionPane.DEFAULT_OPTION, JOptionPane.DEFAULT_OPTION, null, menu, null
                         );
                         switch (opcion) {
                             case 0:
-                                // System.out.println(String.valueOf(jTable1.getValueAt(jTable1.getSelectedRow(), 0)));
-                                String a = "MENSAJE";
-                                JOptionPane.showMessageDialog(null, a);
+
+                                Proveedor proveedor = new Proveedor();
+                                proveedor.setCodigoProveedor(Integer.valueOf(jTable1.getValueAt(jTable1.getSelectedRow(), 0).toString()));
+
+                                ProveedorDao proveedorDao = new ProveedorDao();
+                                String[] callback = new String[1];
+                                //String.valueOf(jTable1.getValueAt(jTable1.getSelectedRow(), 0))
+                                if (proveedorDao.eliminar(proveedor, callback)) {
+                                    JOptionPane.showMessageDialog(null, callback[0]);
+                                } else {
+                                    JOptionPane.showMessageDialog(null, callback[0], "Error", JOptionPane.ERROR_MESSAGE);
+                                }
                                 cargarDatos();
                                 break;
                             case 1:
 
                                 break;
                             default:
-                                JOptionPane.showMessageDialog(null, "Opcion invalida !"); // por si digita algo incorrecto
+                                JOptionPane.showMessageDialog(null, "Opcion invalida !", "Error", JOptionPane.ERROR_MESSAGE);
                                 break;
                         }
                     }
@@ -344,8 +333,8 @@ public class proveedor extends javax.swing.JFrame {
         ProveedorDao proveedorDao = new ProveedorDao();
         String[] callback = new String[1];
         List<Proveedor> proveedors = proveedorDao.leer(callback);
-        
-        if(proveedors == null){
+
+        if (proveedors == null) {
             return;
         }
 
@@ -392,7 +381,6 @@ public class proveedor extends javax.swing.JFrame {
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
     private javax.swing.JLabel jLabel1;

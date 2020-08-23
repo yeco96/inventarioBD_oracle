@@ -74,7 +74,7 @@ public class ProveedorDao implements CRUD<Proveedor> {
         try {
             BD bd = new BD();
             CallableStatement storedProcedure = bd.storedProcedure(staticStoredProcedure.proveedor.eliminar);
-            storedProcedure.setString(1, proveedor.getNombre());
+            storedProcedure.setInt(1, proveedor.getCodigoProveedor());
             storedProcedure.registerOutParameter(2, OracleTypes.VARCHAR);
             
             storedProcedure.executeQuery();
