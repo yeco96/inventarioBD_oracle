@@ -1,8 +1,8 @@
 CREATE OR REPLACE PROCEDURE compra_insert (
-	   factura COMPRA.FACTURA%TYPE,
-	   codigoproveedor	COMPRA.CODIGOPROVEEDOR%TYPE,
-       montocompra COMPRA.MONTOCOMPRA%TYPE,
-       usuarioregistro COMPRA.USUARIOREGISTRO%TYPE,
+	   facturavar COMPRA.FACTURA%TYPE,
+	   codigoproveedorvar	COMPRA.CODIGOPROVEEDOR%TYPE,
+       montocompravar COMPRA.MONTOCOMPRA%TYPE,
+       usuarioregistrovar COMPRA.USUARIOREGISTRO%TYPE,
        P_RESULT OUT VARCHAR2)
 IS
 codigoSiguiente int;
@@ -11,7 +11,7 @@ resultado int;
 BEGIN
 
 SELECT MAX(CODIGOCOMPRA) into codigoSiguiente FROM COMPRA;
-SELECT count(*) into resultado FROM PROVEEDOR WHERE CODIGOPROVEEDOR=codigoproveedor;
+SELECT count(*) into resultado FROM PROVEEDOR WHERE CODIGOPROVEEDOR=codigoproveedorvar;
 
 
 if codigoSiguiente is null then
@@ -28,7 +28,7 @@ end if;
 
 INSERT INTO COMPRA  
     (CODIGOCOMPRA, FACTURA, CODIGOPROVEEDOR, MONTOCOMPRA,FECHACOMPRA, USUARIOREGISTRO)
-    VALUES (codigoSiguiente,factura, codigoproveedor, montocompra,sysdate,usuarioregistro);
+    VALUES (codigoSiguiente,facturavar, codigoproveedorvar, montocompravar,sysdate,usuarioregistrovar);
 
 COMMIT;  
 END;
