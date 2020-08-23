@@ -1,6 +1,6 @@
 CREATE OR REPLACE PROCEDURE venta_insert (
 	   factura VENTA.FACTURA%TYPE,
-	   identificacioncliente	VENTA.IDENTIFICACIONCLIENTE%TYPE,
+	   identificacioncliente VENTA.IDENTIFICACIONCLIENTE%TYPE,
        montoventa VENTA.MONTOVENTA%TYPE,
        usuarioregistro VENTA.USUARIOREGISTRO%TYPE)
 IS
