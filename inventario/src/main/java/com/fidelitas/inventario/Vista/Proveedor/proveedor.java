@@ -28,6 +28,7 @@ import org.xml.sax.SAXException;
 public class proveedor extends javax.swing.JFrame {
 
     static ArrayList<String> datos = new ArrayList<String>();
+    static boolean actualizar;
 
     /**
      * Creates new form proveedor
@@ -36,7 +37,10 @@ public class proveedor extends javax.swing.JFrame {
         initComponents();
         this.setLocationRelativeTo(null);
         this.getContentPane().setBackground(Color.WHITE);
-
+        codigo.setVisible(false);
+        codigo.setEditable(false);
+        codigo_lb.setVisible(false);
+        actualizar = false;
         this.cargarDatos();
     }
 
@@ -51,7 +55,7 @@ public class proveedor extends javax.swing.JFrame {
 
         jLabel1 = new javax.swing.JLabel();
         txt_nombreProveedor = new javax.swing.JTextField();
-        jButton3 = new javax.swing.JButton();
+        insertarBTN = new javax.swing.JButton();
         jPanel3 = new javax.swing.JPanel();
         jPanel4 = new javax.swing.JPanel();
         jPanel1 = new javax.swing.JPanel();
@@ -60,6 +64,8 @@ public class proveedor extends javax.swing.JFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
         jLabel2 = new javax.swing.JLabel();
+        codigo_lb = new javax.swing.JLabel();
+        codigo = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -76,14 +82,14 @@ public class proveedor extends javax.swing.JFrame {
             }
         });
 
-        jButton3.setBackground(new java.awt.Color(11, 51, 63));
-        jButton3.setFont(new java.awt.Font("Franklin Gothic Demi Cond", 1, 18)); // NOI18N
-        jButton3.setForeground(new java.awt.Color(255, 255, 255));
-        jButton3.setText("INGRESAR");
-        jButton3.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 255, 255)));
-        jButton3.addActionListener(new java.awt.event.ActionListener() {
+        insertarBTN.setBackground(new java.awt.Color(11, 51, 63));
+        insertarBTN.setFont(new java.awt.Font("Franklin Gothic Demi Cond", 1, 18)); // NOI18N
+        insertarBTN.setForeground(new java.awt.Color(255, 255, 255));
+        insertarBTN.setText("INGRESAR");
+        insertarBTN.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 255, 255)));
+        insertarBTN.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton3ActionPerformed(evt);
+                insertarBTNActionPerformed(evt);
             }
         });
 
@@ -186,19 +192,36 @@ public class proveedor extends javax.swing.JFrame {
         jLabel2.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel2.setText("Nombre");
 
+        codigo_lb.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        codigo_lb.setText("Código");
+
+        codigo.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
+        codigo.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        codigo.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        codigo.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                codigoKeyTyped(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(36, 36, 36)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                    .addComponent(jButton3, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 378, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                        .addComponent(insertarBTN, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 378, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                            .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGap(18, 18, 18)
+                            .addComponent(txt_nombreProveedor, javax.swing.GroupLayout.PREFERRED_SIZE, 303, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(txt_nombreProveedor, javax.swing.GroupLayout.PREFERRED_SIZE, 303, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(codigo_lb, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(codigo, javax.swing.GroupLayout.PREFERRED_SIZE, 303, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 27, Short.MAX_VALUE)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 492, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
@@ -216,12 +239,16 @@ public class proveedor extends javax.swing.JFrame {
                         .addGap(18, 18, 18))
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabel1)
-                        .addGap(45, 45, 45)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 41, Short.MAX_VALUE)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(txt_nombreProveedor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 21, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 69, Short.MAX_VALUE)
-                        .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(codigo_lb, javax.swing.GroupLayout.PREFERRED_SIZE, 21, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(codigo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 21, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(txt_nombreProveedor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(43, 43, 43)
+                        .addComponent(insertarBTN, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(129, 129, 129)))
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
@@ -242,7 +269,34 @@ public class proveedor extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_txt_nombreProveedorKeyTyped
 
-    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+    private void insertarBTNActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_insertarBTNActionPerformed
+
+        if (actualizar) {
+            Proveedor proveedor = new Proveedor();
+            proveedor.setCodigoProveedor(Integer.valueOf(codigo.getText()));
+            proveedor.setNombre(txt_nombreProveedor.getText());
+
+            ProveedorDao proveedorDao = new ProveedorDao();
+            String[] callback = new String[1];
+            if (proveedorDao.actualizar(proveedor, callback)) {
+                JOptionPane.showMessageDialog(null, callback[0]);
+            } else {
+                JOptionPane.showMessageDialog(null, callback[0], "Error", JOptionPane.ERROR_MESSAGE);
+            }
+            cargarDatos();
+
+            codigo.setVisible(false);
+            codigo.setEditable(false);
+            codigo_lb.setVisible(false);
+            actualizar = false;
+            codigo.setText("");
+            txt_nombreProveedor.setText("");
+
+            insertarBTN.setText("INSERTAR");
+
+            return;
+        }
+
         Proveedor proveedor = new Proveedor();
         proveedor.setNombre(txt_nombreProveedor.getText());
 
@@ -254,7 +308,8 @@ public class proveedor extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, callback[0], "Error", JOptionPane.ERROR_MESSAGE);
         }
         cargarDatos();
-    }//GEN-LAST:event_jButton3ActionPerformed
+        actualizar = false;
+    }//GEN-LAST:event_insertarBTNActionPerformed
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
         menu ocb2 = new menu();
@@ -276,19 +331,15 @@ public class proveedor extends javax.swing.JFrame {
                     JButton boton = (JButton) value;
 
                     if (boton.getName().equals("m")) {
-                        // System.out.println(String.valueOf(jTable1.getValueAt(jTable1.getSelectedRow(), 0)));
-                        String elementoViejo1 = String.valueOf(jTable1.getValueAt(jTable1.getSelectedRow(), 0)),
-                                elementoNuevo1;
 
-                        elementoNuevo1 = JOptionPane.showInputDialog(null, "Ingrese la nueva Moneda: ");
-                        if (!elementoNuevo1.equals(" ")) {
-                            String a = "MENSAJE";
-                            JOptionPane.showMessageDialog(null, a);
-                            cargarDatos();
-                        } else {
-                            JOptionPane.showMessageDialog(null, "Por favor, Dígite la información solicitada");
-                        }
+                        codigo.setVisible(true);
+                        codigo.setEditable(false);
+                        codigo_lb.setVisible(true);
+                        codigo.setText(jTable1.getValueAt(jTable1.getSelectedRow(), 0).toString());
+                        txt_nombreProveedor.setText(jTable1.getValueAt(jTable1.getSelectedRow(), 1).toString());
 
+                        insertarBTN.setText("ACTUALIZAR");
+                        actualizar = true;
                     }
                     if (boton.getName().equals("e")) {
                         String[] menu = {"Si", "No"};
@@ -328,6 +379,10 @@ public class proveedor extends javax.swing.JFrame {
 
 
     }//GEN-LAST:event_jTable1MouseClicked
+
+    private void codigoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_codigoKeyTyped
+        // TODO add your handling code here:
+    }//GEN-LAST:event_codigoKeyTyped
 
     public void cargarDatos() {
         ProveedorDao proveedorDao = new ProveedorDao();
@@ -381,7 +436,9 @@ public class proveedor extends javax.swing.JFrame {
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton3;
+    private javax.swing.JTextField codigo;
+    private javax.swing.JLabel codigo_lb;
+    private javax.swing.JButton insertarBTN;
     private javax.swing.JButton jButton4;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;

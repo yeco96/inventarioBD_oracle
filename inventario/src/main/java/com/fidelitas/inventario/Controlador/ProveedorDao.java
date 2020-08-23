@@ -52,12 +52,13 @@ public class ProveedorDao implements CRUD<Proveedor> {
         try {
             BD bd = new BD();
             CallableStatement storedProcedure = bd.storedProcedure(staticStoredProcedure.proveedor.actualizar);
-            storedProcedure.setString(1, proveedor.getNombre());
-            storedProcedure.registerOutParameter(2, OracleTypes.VARCHAR);
+            storedProcedure.setInt(1, proveedor.getCodigoProveedor());
+            storedProcedure.setString(2, proveedor.getNombre());
+            storedProcedure.registerOutParameter(3, OracleTypes.VARCHAR);
             
             storedProcedure.executeQuery();
             
-            String resultSet = storedProcedure.getString(2);
+            String resultSet = storedProcedure.getString(3);
             if (resultSet != null && !resultSet.equals("")) {
                 callback[0] = resultSet;
             }
