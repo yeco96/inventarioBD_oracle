@@ -25,7 +25,7 @@ import oracle.jdbc.OracleTypes;
 public class ArticuloDao implements CRUD<Articulo> {
 
     @Override
-    public  boolean insertar(Articulo articulo, String[] callback) {
+    public boolean insertar(Articulo articulo, String[] callback) {
         try {
             BD bd = new BD();
             CallableStatement storedProcedure = bd.storedProcedure(staticStoredProcedure.articulo.insertar);
@@ -33,30 +33,27 @@ public class ArticuloDao implements CRUD<Articulo> {
             storedProcedure.setBigDecimal(2, articulo.getCantidadMinima());
             storedProcedure.registerOutParameter(3, OracleTypes.VARCHAR);
             storedProcedure.executeQuery();
-            
-
 
             String resultSet = storedProcedure.getString(2);
             if (resultSet != null && !resultSet.equals("")) {
                 callback[0] = resultSet;
             }
-            
+
             //storedProcedure.registerOutParameter(2, OracleTypes.CURSOR);
-           /* storedProcedure.executeQuery();
+            /* storedProcedure.executeQuery();
             ResultSet resultSet = (ResultSet) storedProcedure.getObject(1);
-            */
-            /*List<Integer> result = new ArrayList<Integer>();
+             */
+ /*List<Integer> result = new ArrayList<Integer>();
             while (resultSet.next()) {
                 result.add(resultSet.getInt(STUDENT_ID));
             }*/
-            
             return true;
         } catch (SQLException ex) {
             Logger.getLogger(ArticuloDao.class.getName()).log(Level.SEVERE, null, ex);
             return false;
         }
     }
-    
+
     @Override
     public boolean eliminar(Articulo articulo, String[] callback) {
         try {
@@ -65,8 +62,6 @@ public class ArticuloDao implements CRUD<Articulo> {
             storedProcedure.setInt(1, articulo.getCodigoArticulo());
             storedProcedure.registerOutParameter(2, OracleTypes.VARCHAR);
             storedProcedure.executeQuery();
-            
-
 
             String resultSet = storedProcedure.getString(2);
             if (resultSet != null && !resultSet.equals("")) {
@@ -85,16 +80,21 @@ public class ArticuloDao implements CRUD<Articulo> {
     }
 
     @Override
-    public List<Articulo> leer(String[] callback) {
+    public List<Articulo> leer(Integer codigo, String[] callback) {
         try {
             BD bd = new BD();
             CallableStatement storedProcedure = bd.storedProcedure(staticStoredProcedure.articulo.leer);
-            storedProcedure.registerOutParameter(1, OracleTypes.CURSOR);
-            storedProcedure.registerOutParameter(2, OracleTypes.VARCHAR);
-            
+            if (codigo == null) {
+                storedProcedure.setNull(1, OracleTypes.BOOLEAN);
+            } else {
+                storedProcedure.setInt(1, codigo);
+            }
+            storedProcedure.registerOutParameter(2, OracleTypes.CURSOR);
+            storedProcedure.registerOutParameter(3, OracleTypes.VARCHAR);
+
             storedProcedure.executeQuery();
-            
-            String resultSet = storedProcedure.getString(2);
+
+            String resultSet = storedProcedure.getString(3);
             if (resultSet != null && !resultSet.equals("")) {
                 callback[0] = resultSet;
             }
@@ -108,7 +108,7 @@ public class ArticuloDao implements CRUD<Articulo> {
                 a.setALL(rs.getInt("codigoArticulo"), rs.getString("descripcion"), rs.getBigDecimal("cantMinima"), rs.getDate("fechaCreacion"));
                 listaArticulo.add(a);
             }
-            
+
             return listaArticulo;
         } catch (SQLException ex) {
             Logger.getLogger(ArticuloDao.class.getName()).log(Level.SEVERE, null, ex);

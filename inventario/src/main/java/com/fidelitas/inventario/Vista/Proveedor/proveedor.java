@@ -387,7 +387,7 @@ public class proveedor extends javax.swing.JFrame {
     public void cargarDatos() {
         ProveedorDao proveedorDao = new ProveedorDao();
         String[] callback = new String[1];
-        List<Proveedor> proveedors = proveedorDao.leer(callback);
+        List<Proveedor> proveedors = proveedorDao.leer(null,callback);
 
         if (proveedors == null) {
             return;

@@ -72,15 +72,23 @@ END;
 /
 
 -- READ
-
-create or replace PROCEDURE proveedor_Read(proveedor_Read OUT SYS_REFCURSOR, P_RESULT OUT VARCHAR2)
+create or replace PROCEDURE proveedor_Read(codigoVar PROVEEDOR.CODIGOPROVEEDOR%TYPE, proveedor_Read OUT SYS_REFCURSOR, P_RESULT OUT VARCHAR2)
 AS 
 BEGIN 
-
+    
+    if codigoVar <> 0  then
     OPEN proveedor_Read for SELECT CODIGOPROVEEDOR, NOMBRE, FECHAINGRESO
-    FROM   PROVEEDOR;
+    FROM   PROVEEDOR where CODIGOPROVEEDOR = codigoVar;
+    else
+    OPEN proveedor_Read for SELECT CODIGOPROVEEDOR, NOMBRE, FECHAINGRESO
+    FROM   PROVEEDOR order by CODIGOPROVEEDOR;
+    end if;
 
     P_RESULT := 'Correcto';  
+
+EXCEPTION
+  WHEN OTHERS THEN
+    P_RESULT := SQLCODE || SQLERRM;  
 
 COMMIT; 
 END;

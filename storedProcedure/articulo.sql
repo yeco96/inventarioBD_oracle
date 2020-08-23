@@ -104,12 +104,19 @@ END;
 --    DROP PROCEDURE articuloRead
 --END 
 
-CREATE OR REPLACE PROCEDURE articulo_Read(articulo_read OUT SYS_REFCURSOR, P_RESULT OUT VARCHAR2)
+CREATE OR REPLACE PROCEDURE articulo_Read(codigoArticuloVar ARTICULO.CODIGOARTICULO%TYPE, articulo_read OUT SYS_REFCURSOR, P_RESULT OUT VARCHAR2)
 AS 
 BEGIN 
- 
+
+    if codigoArticuloVar <> 0  then
     OPEN articulo_read for SELECT codigoArticulo, descripcion, cantMinima, fechaCreacion
-    FROM   articulo;
+    FROM   articulo where codigoArticulo = codigoArticuloVar;
+    else
+    OPEN articulo_read for SELECT codigoArticulo, descripcion, cantMinima, fechaCreacion
+    FROM   articulo order by codigoArticulo;
+    end if;
+ 
+
 
 
 P_RESULT := 'Correcto';  

@@ -27,22 +27,27 @@ public class ProveedorDao implements CRUD<Proveedor> {
     @Override
     public boolean insertar(Proveedor proveedor, String[] callback) {
         try {
+
+            if (proveedor.getNombre() == null || proveedor.getNombre().equals("")) {
+                callback[0] = "Debe indicar un nombre valido";
+                return false;
+            }
+
             BD bd = new BD();
             CallableStatement storedProcedure = bd.storedProcedure(staticStoredProcedure.proveedor.insertar);
             storedProcedure.setString(1, proveedor.getNombre());
             storedProcedure.registerOutParameter(2, OracleTypes.VARCHAR);
             storedProcedure.executeQuery();
-            
-
 
             String resultSet = storedProcedure.getString(2);
             if (resultSet != null && !resultSet.equals("")) {
                 callback[0] = resultSet;
             }
-            
+
             return true;
         } catch (SQLException ex) {
             Logger.getLogger(ArticuloDao.class.getName()).log(Level.SEVERE, null, ex);
+            callback[0] = "Ocurrio un error!";
             return false;
         }
     }
@@ -50,19 +55,30 @@ public class ProveedorDao implements CRUD<Proveedor> {
     @Override
     public boolean actualizar(Proveedor proveedor, String[] callback) {
         try {
+
+            if (proveedor.getCodigoProveedor() == null) {
+                callback[0] = "Debe indicar un codigo valido";
+                return false;
+            }
+
+            if (proveedor.getNombre() == null || proveedor.getNombre().equals("")) {
+                callback[0] = "Debe indicar un nombre valido";
+                return false;
+            }
+
             BD bd = new BD();
             CallableStatement storedProcedure = bd.storedProcedure(staticStoredProcedure.proveedor.actualizar);
             storedProcedure.setInt(1, proveedor.getCodigoProveedor());
             storedProcedure.setString(2, proveedor.getNombre());
             storedProcedure.registerOutParameter(3, OracleTypes.VARCHAR);
-            
+
             storedProcedure.executeQuery();
-            
+
             String resultSet = storedProcedure.getString(3);
             if (resultSet != null && !resultSet.equals("")) {
                 callback[0] = resultSet;
             }
-            
+
             return true;
         } catch (SQLException ex) {
             Logger.getLogger(ArticuloDao.class.getName()).log(Level.SEVERE, null, ex);
@@ -73,18 +89,24 @@ public class ProveedorDao implements CRUD<Proveedor> {
     @Override
     public boolean eliminar(Proveedor proveedor, String[] callback) {
         try {
+
+            if (proveedor.getCodigoProveedor() == null) {
+                callback[0] = "Debe indicar un codigo valido";
+                return false;
+            }
+
             BD bd = new BD();
             CallableStatement storedProcedure = bd.storedProcedure(staticStoredProcedure.proveedor.eliminar);
             storedProcedure.setInt(1, proveedor.getCodigoProveedor());
             storedProcedure.registerOutParameter(2, OracleTypes.VARCHAR);
-            
+
             storedProcedure.executeQuery();
-            
+
             String resultSet = storedProcedure.getString(2);
             if (resultSet != null && !resultSet.equals("")) {
                 callback[0] = resultSet;
             }
-            
+
             return true;
         } catch (SQLException ex) {
             Logger.getLogger(ArticuloDao.class.getName()).log(Level.SEVERE, null, ex);
@@ -93,22 +115,28 @@ public class ProveedorDao implements CRUD<Proveedor> {
     }
 
     @Override
-    public List<Proveedor> leer(String[] callback) {
+    public List<Proveedor> leer(Integer codigo, String[] callback) {
         try {
             BD bd = new BD();
             CallableStatement storedProcedure = bd.storedProcedure(staticStoredProcedure.proveedor.leer);
-            storedProcedure.registerOutParameter(1, OracleTypes.CURSOR);
-            storedProcedure.registerOutParameter(2, OracleTypes.VARCHAR);
-            
+
+            if (codigo == null) {
+                storedProcedure.setInt(1, 0);
+            } else {
+                storedProcedure.setInt(1, codigo);
+            }
+
+            storedProcedure.registerOutParameter(2, OracleTypes.CURSOR);
+            storedProcedure.registerOutParameter(3, OracleTypes.VARCHAR);
+
             storedProcedure.executeQuery();
-            
-            String resultSet = storedProcedure.getString(2);
+
+            String resultSet = storedProcedure.getString(3);
             if (resultSet != null && !resultSet.equals("")) {
                 callback[0] = resultSet;
             }
 
-            // List<Proveedor> resultSet = (List<Proveedor>) storedProcedure.getObject(2);
-            ResultSet rs = (ResultSet) storedProcedure.getObject(1);
+            ResultSet rs = (ResultSet) storedProcedure.getObject(2);
 
             List<Proveedor> listaProveedor = new ArrayList<>();
             while (rs.next()) {
@@ -116,7 +144,7 @@ public class ProveedorDao implements CRUD<Proveedor> {
                 p.setALL(rs.getInt("codigoProveedor"), rs.getString("nombre"), rs.getDate("fechaIngreso"));
                 listaProveedor.add(p);
             }
-            
+
             return listaProveedor;
         } catch (SQLException ex) {
             Logger.getLogger(ArticuloDao.class.getName()).log(Level.SEVERE, null, ex);

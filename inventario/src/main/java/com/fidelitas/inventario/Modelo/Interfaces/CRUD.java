@@ -15,5 +15,5 @@ public interface CRUD<T> {
     public boolean insertar(T objeto, String[] callback);
     public boolean eliminar(T objeto, String[] callback);
     public boolean actualizar(T objeto, String[] callback);
-    public List<T> leer(String[] callback);
+    public List<T> leer(Integer codigo, String[] callback);
 }

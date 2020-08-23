@@ -5,7 +5,6 @@
  */
 package com.fidelitas.inventario.Modelo;
 
-import java.math.BigDecimal;
 import java.util.Date;
 
 /**
@@ -14,21 +13,21 @@ import java.util.Date;
  */
 public class Proveedor {
 
-    private int codigoProveedor;
+    private Integer codigoProveedor;
     private String nombre;
     private Date fechaIngreso;
 
-    public void setALL(int codigoProveedor, String nombre, Date fechaIngreso) {
+    public void setALL(Integer codigoProveedor, String nombre, Date fechaIngreso) {
         this.codigoProveedor = codigoProveedor;
         this.nombre = nombre;
         this.fechaIngreso = fechaIngreso;
     }
 
-    public int getCodigoProveedor() {
+    public Integer getCodigoProveedor() {
         return codigoProveedor;
     }
 
-    public void setCodigoProveedor(int codigoProveedor) {
+    public void setCodigoProveedor(Integer codigoProveedor) {
         this.codigoProveedor = codigoProveedor;
     }
 

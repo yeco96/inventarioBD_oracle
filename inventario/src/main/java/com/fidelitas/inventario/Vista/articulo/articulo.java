@@ -361,7 +361,7 @@ public class articulo extends javax.swing.JFrame {
     public void cargarDatos() {
         ArticuloDao articuloDao = new ArticuloDao();
         String[] callback = new String[1];
-        List<Articulo> articulox = articuloDao.leer(callback);
+        List<Articulo> articulox = articuloDao.leer(null, callback);
         
         if(articulox == null){
             return;
