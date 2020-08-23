@@ -12,8 +12,8 @@ import java.util.List;
  * @author yeiso
  */
 public interface CRUD<T> {
-    public boolean insertar(T objeto);
-    public boolean eliminar(T objeto);
-    public boolean actualizar(T objeto);
-    public List<T> leer();
+    public boolean insertar(T objeto, String[] callback);
+    public boolean eliminar(T objeto, String[] callback);
+    public boolean actualizar(T objeto, String[] callback);
+    public List<T> leer(String[] callback);
 }

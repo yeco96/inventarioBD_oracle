@@ -1,7 +1,7 @@
 --insert
 CREATE OR REPLACE PROCEDURE articulo_insert (
 	   descripcion ARTICULO.DESCRIPCION%TYPE,
-	   cantidadMinima	ARTICULO.CANTMINIMA%TYPE)
+	   cantidadMinima	ARTICULO.CANTMINIMA%TYPE, P_RESULT OUT VARCHAR2)
 	 
 IS
 codigoSiguiente int;
@@ -27,6 +27,13 @@ INSERT INTO ARTICULOEXISTENCIA
 (CODIGOARTICULO, EXISTENCIA)
 VALUES (codigoSiguiente, 0);
  
+
+P_RESULT := 'Correcto';  
+
+EXCEPTION
+  WHEN OTHERS THEN
+    P_RESULT := SQLCODE || SQLERRM;  
+ 
 COMMIT;  
 END;
 /
@@ -40,15 +47,20 @@ END;
 
 
 CREATE OR REPLACE PROCEDURE articulo_delete( 
-    CODIGOARTICULO ARTICULO.CODIGOARTICULO%TYPE)
+    CODIGOARTICULOVar ARTICULO.CODIGOARTICULO%TYPE, P_RESULT OUT VARCHAR2)
 AS 
     BEGIN
-    DELETE FROM ARTICULOPRECIO where CODIGOARTICULO = CODIGOARTICULO;
-    DELETE FROM ARTICULOEXISTENCIA where CODIGOARTICULO = CODIGOARTICULO;
-    DELETE FROM ARTICULO WHERE  CODIGOARTICULO = CODIGOARTICULO;
-    EXCEPTION
-    WHEN OTHERS THEN
-    DBMS_OUTPUT.PUT_LINE(SQLCODE || SQLERRM);
+    DELETE FROM ARTICULOPRECIO where CODIGOARTICULO = CODIGOARTICULOVar;
+    DELETE FROM ARTICULOEXISTENCIA where CODIGOARTICULO = CODIGOARTICULOVar;
+    DELETE FROM ARTICULO WHERE  CODIGOARTICULO = CODIGOARTICULOVar;
+
+
+P_RESULT := 'Correcto';  
+
+EXCEPTION
+  WHEN OTHERS THEN
+    P_RESULT := SQLCODE || SQLERRM;  
+
 COMMIT; 
 END;
 /
@@ -65,17 +77,23 @@ end;
 --END 
 
 CREATE OR REPLACE PROCEDURE articulo_update(
-    codigoArticulo ARTICULO.CODIGOARTICULO%TYPE,
-    descripcion ARTICULO.descripcion%TYPE,
-    cantMinima ARTICULO.cantMinima%TYPE)
+    codigoArticuloVar ARTICULO.CODIGOARTICULO%TYPE,
+    descripcionVar ARTICULO.descripcion%TYPE,
+    cantMinimaVar ARTICULO.cantMinima%TYPE, P_RESULT OUT VARCHAR2)
 AS 
 BEGIN 
 UPDATE articulo
-SET  codigoArticulo = codigoArticulo,
-     descripcion = descripcion, 
-     cantMinima = cantMinima
-WHERE  codigoArticulo = codigoArticulo;
+SET  descripcion = descripcionVar, 
+     cantMinima = cantMinimaVar
+WHERE  codigoArticulo = codigoArticuloVar;
 COMMIT; 
+
+P_RESULT := 'Correcto';  
+
+EXCEPTION
+  WHEN OTHERS THEN
+    P_RESULT := SQLCODE || SQLERRM;  
+
 END;
 /
 
@@ -87,14 +105,22 @@ END;
 --END 
 
 CREATE OR REPLACE PROCEDURE articulo_Read(
-    codigoArticulo ARTICULO.CODIGOARTICULO%TYPE,
-    articulo_read OUT SYS_REFCURSOR)
+    codigoArticuloVar ARTICULO.CODIGOARTICULO%TYPE,
+    articulo_read OUT SYS_REFCURSOR, P_RESULT OUT VARCHAR2)
 AS 
 BEGIN 
  
     OPEN articulo_read for SELECT codigoArticulo, descripcion, cantMinima, fechaCreacion
     FROM   articulo  
-    WHERE  (codigoArticulo = codigoArticulo);
+    WHERE  (codigoArticulo = codigoArticuloVar);
+
+
+P_RESULT := 'Correcto';  
+
+EXCEPTION
+  WHEN OTHERS THEN
+    P_RESULT := SQLCODE || SQLERRM;  
+
 COMMIT; 
 END;
 /

@@ -26,7 +26,9 @@ import org.xml.sax.SAXException;
  * @author yeiso
  */
 public class proveedor extends javax.swing.JFrame {
- static ArrayList<String> datos = new ArrayList<String>();
+
+    static ArrayList<String> datos = new ArrayList<String>();
+
     /**
      * Creates new form proveedor
      */
@@ -34,7 +36,7 @@ public class proveedor extends javax.swing.JFrame {
         initComponents();
         this.setLocationRelativeTo(null);
         this.getContentPane().setBackground(Color.WHITE);
-        
+
         this.cargarDatos();
     }
 
@@ -261,7 +263,8 @@ public class proveedor extends javax.swing.JFrame {
         proveedor.setNombre(txt_nombreProveedor.getText());
 
         ProveedorDao proveedorDao = new ProveedorDao();
-        if (proveedorDao.insertar(proveedor)) {
+        String[] callback = new String[1];
+        if (proveedorDao.insertar(proveedor, callback)) {
             JOptionPane.showMessageDialog(null, "Proveedor insertado correctamente");
         } else {
             JOptionPane.showMessageDialog(null, "Error al insertar");
@@ -299,7 +302,7 @@ public class proveedor extends javax.swing.JFrame {
 
                         elementoNuevo1 = JOptionPane.showInputDialog(null, "Ingrese la nueva Moneda: ");
                         if (!elementoNuevo1.equals(" ")) {
-                           String a = "MENSAJE";
+                            String a = "MENSAJE";
                             JOptionPane.showMessageDialog(null, a);
                             cargarDatos();
                         } else {
@@ -337,13 +340,17 @@ public class proveedor extends javax.swing.JFrame {
 
     }//GEN-LAST:event_jTable1MouseClicked
 
-     public void cargarDatos() {
-         ProveedorDao proveedorDao = new ProveedorDao();
-         List<Proveedor> proveedors = proveedorDao.leer();
-         
+    public void cargarDatos() {
+        ProveedorDao proveedorDao = new ProveedorDao();
+        String[] callback = new String[1];
+        List<Proveedor> proveedors = proveedorDao.leer(callback);
+        
+        if(proveedors == null){
+            return;
+        }
+
         datos.removeAll(datos);
         this.setLocationRelativeTo(null);
-
 
         jTable1.setDefaultRenderer(Object.class, new Render());
         JButton btn1 = new JButton("Modificar");
@@ -376,15 +383,14 @@ public class proveedor extends javax.swing.JFrame {
             datosObejto[4] = btn2;
             tableModel.addRow(datosObejto);
         });
-        
+
         jTable1.setModel(tableModel);
 
         jTable1.setRowHeight(30);
 
     }
-              
-    
-   
+
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;

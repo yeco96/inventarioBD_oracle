@@ -14,6 +14,7 @@ import java.sql.SQLException;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import oracle.jdbc.OracleTypes;
 
 /**
  *
@@ -22,13 +23,21 @@ import java.util.logging.Logger;
 public class ArticuloDao implements CRUD<Articulo> {
 
     @Override
-    public  boolean insertar(Articulo articulo) {
+    public  boolean insertar(Articulo articulo, String[] callback) {
         try {
             BD bd = new BD();
             CallableStatement storedProcedure = bd.storedProcedure(staticStoredProcedure.articulo.insertar);
             storedProcedure.setString(1, articulo.getDescripcion());
             storedProcedure.setBigDecimal(2, articulo.getCantidadMinima());
+            storedProcedure.registerOutParameter(3, OracleTypes.VARCHAR);
             storedProcedure.executeQuery();
+            
+
+
+            String resultSet = storedProcedure.getString(2);
+            if (resultSet != null && !resultSet.equals("")) {
+                callback[0] = resultSet;
+            }
             
             //storedProcedure.registerOutParameter(2, OracleTypes.CURSOR);
            /* storedProcedure.executeQuery();
@@ -47,12 +56,20 @@ public class ArticuloDao implements CRUD<Articulo> {
     }
     
     @Override
-    public boolean eliminar(Articulo articulo) {
+    public boolean eliminar(Articulo articulo, String[] callback) {
         try {
             BD bd = new BD();
             CallableStatement storedProcedure = bd.storedProcedure(staticStoredProcedure.articulo.eliminar);
             storedProcedure.setInt(1, articulo.getCodigoArticulo());
+            storedProcedure.registerOutParameter(2, OracleTypes.VARCHAR);
             storedProcedure.executeQuery();
+            
+
+
+            String resultSet = storedProcedure.getString(2);
+            if (resultSet != null && !resultSet.equals("")) {
+                callback[0] = resultSet;
+            }
             return true;
         } catch (SQLException ex) {
             Logger.getLogger(ArticuloDao.class.getName()).log(Level.SEVERE, null, ex);
@@ -61,12 +78,12 @@ public class ArticuloDao implements CRUD<Articulo> {
     }
 
     @Override
-    public boolean actualizar(Articulo objeto) {
+    public boolean actualizar(Articulo objeto, String[] callback) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
-    public List<Articulo> leer() {
+    public List<Articulo> leer(String[] callback) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 }

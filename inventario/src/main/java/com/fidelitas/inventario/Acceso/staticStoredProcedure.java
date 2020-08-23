@@ -26,9 +26,9 @@ public class staticStoredProcedure {
 
     public static class proveedor {
 
-        public static final String insertar = "{call proveedor_insert(?)}";
-        public static final String eliminar = "{call proveedor_delete(?)}";
-        public static final String actualizar = "{call proveedor_update(?)}";
+        public static final String insertar = "{call proveedor_insert(?, ?)}";
+        public static final String eliminar = "{call proveedor_delete(?, ?)}";
+        public static final String actualizar = "{call proveedor_update(?, ?, ?)}";
         public static final String leer = "{call proveedor_Read(?, ?)}";
     }
 

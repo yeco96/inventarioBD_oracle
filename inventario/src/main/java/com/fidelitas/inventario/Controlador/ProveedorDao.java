@@ -25,13 +25,22 @@ import oracle.jdbc.OracleTypes;
 public class ProveedorDao implements CRUD<Proveedor> {
 
     @Override
-    public boolean insertar(Proveedor proveedor) {
+    public boolean insertar(Proveedor proveedor, String[] callback) {
         try {
             BD bd = new BD();
             CallableStatement storedProcedure = bd.storedProcedure(staticStoredProcedure.proveedor.insertar);
             storedProcedure.setString(1, proveedor.getNombre());
+            storedProcedure.registerOutParameter(2, OracleTypes.VARCHAR);
             storedProcedure.executeQuery();
-            return true;
+            
+
+
+            String resultSet = storedProcedure.getString(2);
+            if (resultSet != null && !resultSet.equals("")) {
+                callback[0] = resultSet;
+            }
+            
+//            return true;
         } catch (SQLException ex) {
             Logger.getLogger(ArticuloDao.class.getName()).log(Level.SEVERE, null, ex);
             return false;
@@ -39,12 +48,20 @@ public class ProveedorDao implements CRUD<Proveedor> {
     }
 
     @Override
-    public boolean actualizar(Proveedor proveedor) {
+    public boolean actualizar(Proveedor proveedor, String[] callback) {
         try {
             BD bd = new BD();
             CallableStatement storedProcedure = bd.storedProcedure(staticStoredProcedure.proveedor.actualizar);
             storedProcedure.setString(1, proveedor.getNombre());
+            storedProcedure.registerOutParameter(2, OracleTypes.VARCHAR);
+            
             storedProcedure.executeQuery();
+            
+            String resultSet = storedProcedure.getString(2);
+            if (resultSet != null && !resultSet.equals("")) {
+                callback[0] = resultSet;
+            }
+            
             return true;
         } catch (SQLException ex) {
             Logger.getLogger(ArticuloDao.class.getName()).log(Level.SEVERE, null, ex);
@@ -53,12 +70,20 @@ public class ProveedorDao implements CRUD<Proveedor> {
     }
 
     @Override
-    public boolean eliminar(Proveedor proveedor) {
+    public boolean eliminar(Proveedor proveedor, String[] callback) {
         try {
             BD bd = new BD();
             CallableStatement storedProcedure = bd.storedProcedure(staticStoredProcedure.proveedor.eliminar);
             storedProcedure.setString(1, proveedor.getNombre());
+            storedProcedure.registerOutParameter(2, OracleTypes.VARCHAR);
+            
             storedProcedure.executeQuery();
+            
+            String resultSet = storedProcedure.getString(2);
+            if (resultSet != null && !resultSet.equals("")) {
+                callback[0] = resultSet;
+            }
+            
             return true;
         } catch (SQLException ex) {
             Logger.getLogger(ArticuloDao.class.getName()).log(Level.SEVERE, null, ex);
@@ -67,16 +92,22 @@ public class ProveedorDao implements CRUD<Proveedor> {
     }
 
     @Override
-    public List<Proveedor> leer() {
+    public List<Proveedor> leer(String[] callback) {
         try {
             BD bd = new BD();
             CallableStatement storedProcedure = bd.storedProcedure(staticStoredProcedure.proveedor.leer);
-            storedProcedure.setString(1, "1");
-            storedProcedure.registerOutParameter(2, OracleTypes.CURSOR);
+            storedProcedure.registerOutParameter(1, OracleTypes.CURSOR);
+            storedProcedure.registerOutParameter(2, OracleTypes.VARCHAR);
+            
             storedProcedure.executeQuery();
+            
+            String resultSet = storedProcedure.getString(2);
+            if (resultSet != null && !resultSet.equals("")) {
+                callback[0] = resultSet;
+            }
 
             // List<Proveedor> resultSet = (List<Proveedor>) storedProcedure.getObject(2);
-            ResultSet rs = (ResultSet) storedProcedure.getObject(2);
+            ResultSet rs = (ResultSet) storedProcedure.getObject(1);
 
             List<Proveedor> listaProveedor = new ArrayList<>();
             while (rs.next()) {

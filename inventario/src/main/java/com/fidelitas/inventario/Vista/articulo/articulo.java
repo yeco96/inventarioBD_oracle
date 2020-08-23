@@ -303,12 +303,13 @@ public class articulo extends javax.swing.JFrame {
         articulo.setCantidadMinima(new BigDecimal(a));
 
         ArticuloDao articuloDao = new ArticuloDao();
-        if (articuloDao.insertar(articulo)) {
+        String[] callback = new String[1];
+        if (articuloDao.insertar(articulo, callback)) {
             mensajeError.setText("Articulo insertado correctamente");
         } else {
             mensajeError.setText("Error al insertar");
         }
-       // Articulo articulo = new Articulo();
+        // Articulo articulo = new Articulo();
 //        articulo.setDescripcion("nuevo");
 //        articulo.setCantidadMinima(BigDecimal.ZERO);
     }//GEN-LAST:event_jB_AgregarArtActionPerformed
@@ -332,10 +333,10 @@ public class articulo extends javax.swing.JFrame {
         Integer a = Integer.parseInt(JOptionPane.showInputDialog("Ingrese el codigo del articulo:"));
         Articulo art = new Articulo();
         art.setCodigoArticulo(a);
-        
+
         ArticuloDao articuloDao = new ArticuloDao();
-      
-        if (articuloDao.eliminar(art)) {
+        String[] callback = new String[1];
+        if (articuloDao.eliminar(art, callback)) {
             mensajeError.setText("Articulo eliminado correctamente");
         } else {
             mensajeError.setText("Error al eliminar");
@@ -363,5 +364,4 @@ public class articulo extends javax.swing.JFrame {
     private javax.swing.JTextField txt_cantMinArtic;
     // End of variables declaration//GEN-END:variables
 
-    
 }
