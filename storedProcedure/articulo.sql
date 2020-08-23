@@ -33,7 +33,7 @@ P_RESULT := 'Correcto';
 EXCEPTION
   WHEN OTHERS THEN
     P_RESULT := SQLCODE || SQLERRM;  
- 
+
 COMMIT;  
 END;
 /
@@ -104,15 +104,12 @@ END;
 --    DROP PROCEDURE articuloRead
 --END 
 
-CREATE OR REPLACE PROCEDURE articulo_Read(
-    codigoArticuloVar ARTICULO.CODIGOARTICULO%TYPE,
-    articulo_read OUT SYS_REFCURSOR, P_RESULT OUT VARCHAR2)
+CREATE OR REPLACE PROCEDURE articulo_Read(articulo_read OUT SYS_REFCURSOR, P_RESULT OUT VARCHAR2)
 AS 
 BEGIN 
  
     OPEN articulo_read for SELECT codigoArticulo, descripcion, cantMinima, fechaCreacion
-    FROM   articulo  
-    WHERE  (codigoArticulo = codigoArticuloVar);
+    FROM   articulo;
 
 
 P_RESULT := 'Correcto';  
