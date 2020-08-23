@@ -40,7 +40,7 @@ public class ProveedorDao implements CRUD<Proveedor> {
                 callback[0] = resultSet;
             }
             
-//            return true;
+            return true;
         } catch (SQLException ex) {
             Logger.getLogger(ArticuloDao.class.getName()).log(Level.SEVERE, null, ex);
             return false;
