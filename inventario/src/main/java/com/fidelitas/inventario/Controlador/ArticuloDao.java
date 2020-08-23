@@ -10,7 +10,9 @@ import com.fidelitas.inventario.Acceso.staticStoredProcedure;
 import com.fidelitas.inventario.Modelo.Interfaces.CRUD;
 import com.fidelitas.inventario.Modelo.Articulo;
 import java.sql.CallableStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -84,6 +86,33 @@ public class ArticuloDao implements CRUD<Articulo> {
 
     @Override
     public List<Articulo> leer(String[] callback) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        try {
+            BD bd = new BD();
+            CallableStatement storedProcedure = bd.storedProcedure(staticStoredProcedure.articulo.leer);
+            storedProcedure.registerOutParameter(1, OracleTypes.CURSOR);
+            storedProcedure.registerOutParameter(2, OracleTypes.VARCHAR);
+            
+            storedProcedure.executeQuery();
+            
+            String resultSet = storedProcedure.getString(2);
+            if (resultSet != null && !resultSet.equals("")) {
+                callback[0] = resultSet;
+            }
+
+            // List<Proveedor> resultSet = (List<Proveedor>) storedProcedure.getObject(2);
+            ResultSet rs = (ResultSet) storedProcedure.getObject(1);
+
+            List<Articulo> listaArticulo = new ArrayList<>();
+            while (rs.next()) {
+                Articulo a = new Articulo();
+                a.setALL(rs.getInt("codigoArticulo"), rs.getString("descripcion"), rs.getBigDecimal("cantMinima"), rs.getDate("fechaCreacion"));
+                listaArticulo.add(a);
+            }
+            
+            return listaArticulo;
+        } catch (SQLException ex) {
+            Logger.getLogger(ArticuloDao.class.getName()).log(Level.SEVERE, null, ex);
+            return null;
+        }
     }
 }

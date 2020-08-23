@@ -50,9 +50,13 @@ public class Articulo {
     public void setFechaCreacion(Date fechaCreacion) {
         this.fechaCreacion = fechaCreacion;
     }
-    
-    
-    
-    
+
+    public void setALL(int codigoArticulo, String descripcion, BigDecimal cantidadMinima, Date fechaCreacion) {
+        this.codigoArticulo = codigoArticulo;
+        this.descripcion = descripcion;
+        this.cantidadMinima = cantidadMinima;
+        this.fechaCreacion = fechaCreacion;
+    }
+ 
     
 }

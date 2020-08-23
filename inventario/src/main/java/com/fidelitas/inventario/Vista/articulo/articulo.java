@@ -6,10 +6,18 @@
 package com.fidelitas.inventario.Vista.articulo;
 
 import com.fidelitas.inventario.Controlador.ArticuloDao;
+import com.fidelitas.inventario.Controlador.ProveedorDao;
 import com.fidelitas.inventario.Modelo.Articulo;
+import com.fidelitas.inventario.Modelo.Proveedor;
+import com.fidelitas.inventario.Utilidades.Render;
 import com.fidelitas.inventario.Vista.menu;
+import java.awt.Color;
 import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.List;
+import javax.swing.JButton;
 import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -20,8 +28,14 @@ public class articulo extends javax.swing.JFrame {
     /**
      * Creates new form articulo
      */
+    static ArrayList<String> datos = new ArrayList<String>();
+    
     public articulo() {
         initComponents();
+        this.setLocationRelativeTo(null);
+        this.getContentPane().setBackground(Color.WHITE);
+
+        this.cargarDatos();
     }
 
     /**
@@ -319,9 +333,111 @@ public class articulo extends javax.swing.JFrame {
     }//GEN-LAST:event_jB_BuscarActionPerformed
 
     private void jTableArticulMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTableArticulMouseClicked
+        try {
+            int colum = jTableArticul.getColumnModel().getColumnIndexAtX(evt.getX());
+            int row = evt.getY() / jTableArticul.getRowHeight();
 
+            if (row < jTableArticul.getRowCount() && row >= 0 && colum < jTableArticul.getColumnCount() && colum >= 0) {
+
+                Object value = jTableArticul.getValueAt(row, colum);
+                if (value instanceof JButton) {
+                    ((JButton) value).doClick();
+                    JButton boton = (JButton) value;
+
+                    if (boton.getName().equals("m")) {
+                        // System.out.println(String.valueOf(jTable1.getValueAt(jTable1.getSelectedRow(), 0)));
+                        String elementoViejo1 = String.valueOf(jTableArticul.getValueAt(jTableArticul.getSelectedRow(), 0)),
+                                elementoNuevo1;
+
+                        elementoNuevo1 = JOptionPane.showInputDialog(null, "Ingrese la nueva Moneda: ");
+                        if (!elementoNuevo1.equals(" ")) {
+                            String a = "MENSAJE";
+                            JOptionPane.showMessageDialog(null, a);
+                            cargarDatos();
+                        } else {
+                            JOptionPane.showMessageDialog(null, "Por favor, Dígite la información solicitada");
+                        }
+
+                    }
+                    if (boton.getName().equals("e")) {
+                        String[] menu = {"Si", "No"};
+                        int opcion = JOptionPane.showOptionDialog(
+                                null, "¿Desea eliminar " + String.valueOf(jTableArticul.getValueAt(jTableArticul.getSelectedRow(), 0)) + " del catálogo", "catálogo de Moneda", JOptionPane.DEFAULT_OPTION, JOptionPane.DEFAULT_OPTION, null, menu, null
+                        );
+                        switch (opcion) {
+                            case 0:
+                                // System.out.println(String.valueOf(jTable1.getValueAt(jTable1.getSelectedRow(), 0)));
+                                String a = "MENSAJE";
+                                JOptionPane.showMessageDialog(null, a);
+                                cargarDatos();
+                                break;
+                            case 1:
+
+                                break;
+                            default:
+                                JOptionPane.showMessageDialog(null, "Opcion invalida !"); // por si digita algo incorrecto
+                                break;
+                        }
+                    }
+                }
+
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, e);
+        }
     }//GEN-LAST:event_jTableArticulMouseClicked
 
+    public void cargarDatos() {
+        ArticuloDao articuloDao = new ArticuloDao();
+        String[] callback = new String[1];
+        List<Articulo> articulox = articuloDao.leer(callback);
+        
+        if(articulox == null){
+            return;
+        }
+
+        datos.removeAll(datos);
+        this.setLocationRelativeTo(null);
+
+        jTableArticul.setDefaultRenderer(Object.class, new Render());
+        JButton btn1 = new JButton("Modificar");
+        btn1.setName("m");
+        Color color1 = new Color(199, 80, 80);
+        Color color2 = new Color(17, 128, 170);
+        btn1.setBackground(color2);
+        btn1.setForeground(Color.white);
+        JButton btn2 = new JButton("Eliminar");
+        btn2.setName("e");
+        btn2.setBackground(color1);
+        btn2.setForeground(Color.white);
+        String[] columnNames = {"Codigo", "Descripcion","Cantidad Minima", "Fecha", "", ""};
+
+        DefaultTableModel tableModel = new DefaultTableModel() {
+            @Override
+            public boolean isCellEditable(int row, int column) {
+                return false;
+            }
+        };
+
+        tableModel.setColumnIdentifiers(columnNames);
+
+        Object[] datosObejto = new Object[6];
+        articulox.forEach((t) -> {
+            datosObejto[0] = t.getCodigoArticulo();
+            datosObejto[1] = t.getDescripcion();
+            datosObejto[2] = t.getCantidadMinima();
+            datosObejto[3] = t.getFechaCreacion();
+            datosObejto[4] = btn1;
+            datosObejto[5] = btn2;
+            tableModel.addRow(datosObejto);
+        });
+
+        jTableArticul.setModel(tableModel);
+
+        jTableArticul.setRowHeight(30);
+
+    }
+    
     private void jB_VolverMActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jB_VolverMActionPerformed
         menu ocb2 = new menu();
         ocb2.setVisible(true);
