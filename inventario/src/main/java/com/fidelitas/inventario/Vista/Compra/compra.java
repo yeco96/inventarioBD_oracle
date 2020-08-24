@@ -361,6 +361,7 @@ public class compra extends javax.swing.JFrame {
             return;
         }
         
+        
         Compra compra = new Compra();
         compra.setFactura(Integer.parseInt(jTextFactu.getText()));
         compra.setCodigoProveedor(Integer.parseInt(jTextCODProvee.getText()));
