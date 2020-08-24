@@ -13,7 +13,7 @@ import java.util.Date;
  */
 public class Proveedor {
 
-    private Integer codigoProveedor;
+    private int codigoProveedor;
     private String nombre;
     private Date fechaIngreso;
 

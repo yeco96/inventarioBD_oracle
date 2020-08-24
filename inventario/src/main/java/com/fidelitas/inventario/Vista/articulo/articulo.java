@@ -277,17 +277,22 @@ public class articulo extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jB_AgregarArtActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jB_AgregarArtActionPerformed
-        Articulo articulo = new Articulo();
         String a = txt_cantMinArtic.getText();
-        articulo.setDescripcion(txt_DescripcionArt.getText());
-        articulo.setCantidadMinima(new BigDecimal(a));
-
-        ArticuloDao articuloDao = new ArticuloDao();
-        String[] callback = new String[1];
-        if (articuloDao.insertar(articulo, callback)) {
-            mensajeError.setText("Articulo insertado correctamente");
-        } else {
-            mensajeError.setText("Error al insertar");
+        String b = txt_DescripcionArt.getText();
+        if(a != " "&& b != " "){
+            mensajeError.setText("Faltan datos");
+        }else{
+            Articulo articulo = new Articulo();
+            articulo.setDescripcion(txt_DescripcionArt.getText());
+            articulo.setCantidadMinima(new BigDecimal(a));
+            
+            ArticuloDao articuloDao = new ArticuloDao();
+            String[] callback = new String[1];
+            if (articuloDao.insertar(articulo, callback)) {
+                mensajeError.setText("Articulo insertado correctamente");
+            } else {
+                mensajeError.setText("Error al insertar");
+            }
         }
         // Articulo articulo = new Articulo();
 //        articulo.setDescripcion("nuevo");

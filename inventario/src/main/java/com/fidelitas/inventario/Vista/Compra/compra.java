@@ -5,7 +5,17 @@
  */
 package com.fidelitas.inventario.Vista.Compra;
 
+import com.fidelitas.inventario.Controlador.ArticuloDao;
+import com.fidelitas.inventario.Controlador.CompraDao;
+import com.fidelitas.inventario.Controlador.ProveedorDao;
+import com.fidelitas.inventario.Modelo.Articulo;
+import com.fidelitas.inventario.Modelo.Compra;
+import com.fidelitas.inventario.Modelo.Proveedor;
 import com.fidelitas.inventario.Vista.menu;
+import java.awt.Color;
+import java.math.BigDecimal;
+import java.util.ArrayList;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -16,9 +26,15 @@ public class compra extends javax.swing.JFrame {
     /**
      * Creates new form compra
      */
+    static ArrayList<String> datos = new ArrayList<String>();
+
+    
     public compra() {
         initComponents();
         this.setLocationRelativeTo(null);
+        this.getContentPane().setBackground(Color.WHITE);
+        
+        //this.cargarDatos();
     }
 
     /**
@@ -34,10 +50,10 @@ public class compra extends javax.swing.JFrame {
         jPanel1 = new javax.swing.JPanel();
         jBAgregar = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
-        jTextCODCOMP1 = new javax.swing.JTextField();
-        jTextCODCOMP2 = new javax.swing.JTextField();
+        jTextMontCom = new javax.swing.JTextField();
+        jTextCODProvee = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
-        jTextCODCOMP3 = new javax.swing.JTextField();
+        jTextCODArti = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
         jPanel3 = new javax.swing.JPanel();
         jPanel4 = new javax.swing.JPanel();
@@ -46,13 +62,14 @@ public class compra extends javax.swing.JFrame {
         jPanel6 = new javax.swing.JPanel();
         jLabel5 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
-        jTextCODCOMP4 = new javax.swing.JTextField();
+        jTextFactu = new javax.swing.JTextField();
         jLabel7 = new javax.swing.JLabel();
-        jTextCODCOMP5 = new javax.swing.JTextField();
+        jTextCant = new javax.swing.JTextField();
         jLabel8 = new javax.swing.JLabel();
-        jTextCODCOMP6 = new javax.swing.JTextField();
+        jTextCostArt = new javax.swing.JTextField();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
+        mensajeError = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -67,24 +84,24 @@ public class compra extends javax.swing.JFrame {
         jLabel1.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel1.setText("Factura:");
 
-        jTextCODCOMP1.addActionListener(new java.awt.event.ActionListener() {
+        jTextMontCom.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextCODCOMP1ActionPerformed(evt);
+                jTextMontComActionPerformed(evt);
             }
         });
 
-        jTextCODCOMP2.addActionListener(new java.awt.event.ActionListener() {
+        jTextCODProvee.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextCODCOMP2ActionPerformed(evt);
+                jTextCODProveeActionPerformed(evt);
             }
         });
 
         jLabel2.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel2.setText("Codigo del Proveedor: ");
 
-        jTextCODCOMP3.addActionListener(new java.awt.event.ActionListener() {
+        jTextCODArti.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextCODCOMP3ActionPerformed(evt);
+                jTextCODArtiActionPerformed(evt);
             }
         });
 
@@ -173,27 +190,27 @@ public class compra extends javax.swing.JFrame {
         jLabel6.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel6.setText("Monto Compra:");
 
-        jTextCODCOMP4.addActionListener(new java.awt.event.ActionListener() {
+        jTextFactu.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextCODCOMP4ActionPerformed(evt);
+                jTextFactuActionPerformed(evt);
             }
         });
 
         jLabel7.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel7.setText("Cantidad:");
 
-        jTextCODCOMP5.addActionListener(new java.awt.event.ActionListener() {
+        jTextCant.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextCODCOMP5ActionPerformed(evt);
+                jTextCantActionPerformed(evt);
             }
         });
 
         jLabel8.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel8.setText("Costo:");
 
-        jTextCODCOMP6.addActionListener(new java.awt.event.ActionListener() {
+        jTextCostArt.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextCODCOMP6ActionPerformed(evt);
+                jTextCostArtActionPerformed(evt);
             }
         });
 
@@ -209,6 +226,11 @@ public class compra extends javax.swing.JFrame {
             }
         ));
         jScrollPane1.setViewportView(jTable1);
+
+        mensajeError.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        mensajeError.setForeground(new java.awt.Color(255, 255, 255));
+        mensajeError.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        mensajeError.setText(" ");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -227,7 +249,7 @@ public class compra extends javax.swing.JFrame {
                         .addGap(185, 185, 185)
                         .addComponent(jLabel2)
                         .addGap(18, 18, 18)
-                        .addComponent(jTextCODCOMP2, javax.swing.GroupLayout.PREFERRED_SIZE, 87, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(jTextCODProvee, javax.swing.GroupLayout.PREFERRED_SIZE, 87, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(29, 29, 29)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -241,20 +263,23 @@ public class compra extends javax.swing.JFrame {
                                     .addComponent(jLabel3))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jTextCODCOMP4, javax.swing.GroupLayout.PREFERRED_SIZE, 87, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jTextCODCOMP1, javax.swing.GroupLayout.PREFERRED_SIZE, 87, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jTextFactu, javax.swing.GroupLayout.PREFERRED_SIZE, 87, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jTextMontCom, javax.swing.GroupLayout.PREFERRED_SIZE, 87, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addGroup(jPanel1Layout.createSequentialGroup()
                                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                             .addGroup(jPanel1Layout.createSequentialGroup()
                                                 .addGap(95, 95, 95)
                                                 .addComponent(jLabel7)
                                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                                .addComponent(jTextCODCOMP5, javax.swing.GroupLayout.PREFERRED_SIZE, 87, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addComponent(jTextCant, javax.swing.GroupLayout.PREFERRED_SIZE, 87, javax.swing.GroupLayout.PREFERRED_SIZE)
                                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                                 .addComponent(jLabel8))
-                                            .addComponent(jTextCODCOMP3, javax.swing.GroupLayout.PREFERRED_SIZE, 87, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                            .addComponent(jTextCODArti, javax.swing.GroupLayout.PREFERRED_SIZE, 87, javax.swing.GroupLayout.PREFERRED_SIZE))
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                        .addComponent(jTextCODCOMP6, javax.swing.GroupLayout.PREFERRED_SIZE, 87, javax.swing.GroupLayout.PREFERRED_SIZE)))))))
+                                        .addComponent(jTextCostArt, javax.swing.GroupLayout.PREFERRED_SIZE, 87, javax.swing.GroupLayout.PREFERRED_SIZE))))))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(89, 89, 89)
+                        .addComponent(mensajeError, javax.swing.GroupLayout.PREFERRED_SIZE, 331, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(110, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
@@ -269,30 +294,32 @@ public class compra extends javax.swing.JFrame {
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel1)
                             .addComponent(jLabel2)
-                            .addComponent(jTextCODCOMP2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(jTextCODProvee, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(jTextCODCOMP4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(jTextFactu, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel6)
-                    .addComponent(jTextCODCOMP1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jTextMontCom, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(13, 13, 13)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(jTextCODCOMP3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jTextCODArti, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(jLabel3))
                     .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(jLabel7)
-                        .addComponent(jTextCODCOMP5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jTextCant, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(jLabel8)
-                        .addComponent(jTextCODCOMP6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(jTextCostArt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 142, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jBAgregar, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(70, 70, 70)
+                .addGap(18, 18, 18)
+                .addComponent(mensajeError, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(16, 16, 16)
                 .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(193, 193, 193))
         );
@@ -313,19 +340,40 @@ public class compra extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jTextCODCOMP1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextCODCOMP1ActionPerformed
+    private void jTextMontComActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextMontComActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTextCODCOMP1ActionPerformed
+    }//GEN-LAST:event_jTextMontComActionPerformed
 
-    private void jTextCODCOMP2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextCODCOMP2ActionPerformed
+    private void jTextCODProveeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextCODProveeActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTextCODCOMP2ActionPerformed
+    }//GEN-LAST:event_jTextCODProveeActionPerformed
 
-    private void jTextCODCOMP3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextCODCOMP3ActionPerformed
+    private void jTextCODArtiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextCODArtiActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTextCODCOMP3ActionPerformed
+    }//GEN-LAST:event_jTextCODArtiActionPerformed
 
     private void jBAgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBAgregarActionPerformed
+        
+        String txtmont =jTextMontCom.getText();
+        
+        if (txtmont == null || txtmont.equals("")) {
+            JOptionPane.showMessageDialog(null, "Debe ingresar un codigo de articulo", "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        
+        Compra compra = new Compra();
+        compra.setFactura(Integer.parseInt(jTextFactu.getText()));
+        compra.setCodigoProveedor(Integer.parseInt(jTextCODProvee.getText()));
+        compra.setMontoCompra(new BigDecimal(txtmont));
+        compra.setUsuarioRegistro("gmena");
+            
+        CompraDao compraDao = new CompraDao();
+        String[] callback = new String[1];
+        if (compraDao.insertar(compra, callback)) {
+            mensajeError.setText("Compra insertada correctamente");
+        } else {
+                mensajeError.setText("Error al insertar");
+        }
         // TODO add your handling code here:
     }//GEN-LAST:event_jBAgregarActionPerformed
 
@@ -335,17 +383,17 @@ public class compra extends javax.swing.JFrame {
         this.setVisible(false);
     }//GEN-LAST:event_jButton4ActionPerformed
 
-    private void jTextCODCOMP4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextCODCOMP4ActionPerformed
+    private void jTextFactuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextFactuActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTextCODCOMP4ActionPerformed
+    }//GEN-LAST:event_jTextFactuActionPerformed
 
-    private void jTextCODCOMP5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextCODCOMP5ActionPerformed
+    private void jTextCantActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextCantActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTextCODCOMP5ActionPerformed
+    }//GEN-LAST:event_jTextCantActionPerformed
 
-    private void jTextCODCOMP6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextCODCOMP6ActionPerformed
+    private void jTextCostArtActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextCostArtActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTextCODCOMP6ActionPerformed
+    }//GEN-LAST:event_jTextCostArtActionPerformed
 
     /**
      * @param args the command line arguments
@@ -370,11 +418,12 @@ public class compra extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel6;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTable1;
-    private javax.swing.JTextField jTextCODCOMP1;
-    private javax.swing.JTextField jTextCODCOMP2;
-    private javax.swing.JTextField jTextCODCOMP3;
-    private javax.swing.JTextField jTextCODCOMP4;
-    private javax.swing.JTextField jTextCODCOMP5;
-    private javax.swing.JTextField jTextCODCOMP6;
+    private javax.swing.JTextField jTextCODArti;
+    private javax.swing.JTextField jTextCODProvee;
+    private javax.swing.JTextField jTextCant;
+    private javax.swing.JTextField jTextCostArt;
+    private javax.swing.JTextField jTextFactu;
+    private javax.swing.JTextField jTextMontCom;
+    private javax.swing.JLabel mensajeError;
     // End of variables declaration//GEN-END:variables
 }
