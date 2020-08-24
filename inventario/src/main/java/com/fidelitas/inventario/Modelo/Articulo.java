@@ -18,6 +18,9 @@ public class Articulo {
     private String descripcion;
     private BigDecimal cantidadMinima;
     private Date fechaCreacion;
+    
+    private Precio precio;
+    private Existencia existencia;
 
     public int getCodigoArticulo() {
         return codigoArticulo;
@@ -50,6 +53,26 @@ public class Articulo {
     public void setFechaCreacion(Date fechaCreacion) {
         this.fechaCreacion = fechaCreacion;
     }
+
+
+
+    public Precio getPrecio() {
+        return precio;
+    }
+
+    public void setPrecio(Precio precio) {
+        this.precio = precio;
+    }
+
+    public Existencia getExistencia() {
+        return existencia;
+    }
+
+    public void setExistencia(Existencia existencia) {
+        this.existencia = existencia;
+    }
+    
+    
 
     public void setALL(int codigoArticulo, String descripcion, BigDecimal cantidadMinima, Date fechaCreacion) {
         this.codigoArticulo = codigoArticulo;

@@ -5,8 +5,19 @@
  */
 package com.fidelitas.inventario.Vista.Venta;
 
+import com.fidelitas.inventario.Controlador.ArticuloDao;
+import com.fidelitas.inventario.Controlador.ProveedorDao;
+import com.fidelitas.inventario.Modelo.Articulo;
+import com.fidelitas.inventario.Modelo.Proveedor;
+import com.fidelitas.inventario.Utilidades.Render;
 import com.fidelitas.inventario.Vista.menu;
+import java.awt.Color;
+import java.math.BigDecimal;
 import java.util.Date;
+import java.util.List;
+import javax.swing.JButton;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -20,6 +31,8 @@ public class Venta extends javax.swing.JFrame {
     public Venta() {
         initComponents();
         this.setLocationRelativeTo(null);
+        txtFecha.setText(new Date().toString());
+        tabla();
     }
 
     /**
@@ -357,8 +370,72 @@ public class Venta extends javax.swing.JFrame {
     }//GEN-LAST:event_txtidClienteActionPerformed
 
     private void agregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_agregarActionPerformed
-        // TODO add your handling code here:
+
+        if (txtarticulo.getText() == null || txtarticulo.getText().equals("")) {
+            JOptionPane.showMessageDialog(null, "Debe ingresar un codigo de articulo", "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
+        if (txtCantidad.getText() == null || txtCantidad.getText().equals("")) {
+            JOptionPane.showMessageDialog(null, "Debe ingresar una cantidad valida", "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
+        ArticuloDao a = new ArticuloDao();
+        String[] callback = new String[1];
+        List<Articulo> articulos = a.leer(Integer.valueOf(txtarticulo.getText()), callback);
+
+        if (articulos == null || articulos.isEmpty()) {
+            JOptionPane.showMessageDialog(null, "El articulo no existe", "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        
+        cargarArticulo(articulos.get(0), Integer.valueOf(txtCantidad.getText()));
+        
+        txtarticulo.setText(null);
+        txtCantidad.setText(null);
+
+
     }//GEN-LAST:event_agregarActionPerformed
+
+    public void tabla() {
+        jTable1.setDefaultRenderer(Object.class, new Render());
+
+        String[] columnNames = {"Codigo", "Descripcion", "Cantidad", "Precio", "Total", ""};
+
+        DefaultTableModel tableModel = new DefaultTableModel() {
+            @Override
+            public boolean isCellEditable(int row, int column) {
+                return false;
+            }
+        };
+
+        tableModel.setColumnIdentifiers(columnNames);
+        jTable1.setModel(tableModel);
+        jTable1.setRowHeight(30);
+    }
+
+    public void cargarArticulo(Articulo a, Integer cantidad) {
+
+        Color color1 = new Color(199, 80, 80);
+        JButton btn2 = new JButton("Eliminar");
+        btn2.setName("e");
+        btn2.setBackground(color1);
+        btn2.setForeground(Color.white);
+
+        DefaultTableModel tableModel = (DefaultTableModel) jTable1.getModel();
+        Object[] datosObejto = new Object[7];
+
+        datosObejto[0] = a.getCodigoArticulo();
+        datosObejto[1] = a.getDescripcion();
+        datosObejto[2] = cantidad;
+        datosObejto[3] = a.getPrecio().getPrecio();
+        datosObejto[4] = a.getPrecio().getPrecio().multiply(new BigDecimal(cantidad));
+        datosObejto[5] = btn2;
+        tableModel.addRow(datosObejto);
+
+        jTable1.setModel(tableModel);
+    }
 
     private void txtnombreClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtnombreClienteActionPerformed
         // TODO add your handling code here:
@@ -376,7 +453,6 @@ public class Venta extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jBAgregar1ActionPerformed
 
-    
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton agregar;

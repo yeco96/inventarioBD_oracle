@@ -109,11 +109,11 @@ AS
 BEGIN 
 
     if codigoArticuloVar <> 0  then
-    OPEN articulo_read for SELECT codigoArticulo, descripcion, cantMinima, fechaCreacion
-    FROM   articulo where codigoArticulo = codigoArticuloVar;
+    OPEN articulo_read for SELECT a.codigoArticulo, a.descripcion, a.cantMinima, a.fechaCreacion, P.PRECIO, P.PORCENTAJEUTILIDAD, P.TARIFAIMPUESTO, P.MONTOCOSTO, AE.EXISTENCIA
+    FROM   articulo a inner join ARTICULOPRECIO p on a.CODIGOARTICULO = P.CODIGOARTICULO inner join ARTICULOEXISTENCIA ae on A.CODIGOARTICULO = AE.CODIGOARTICULO where a.codigoArticulo = codigoArticuloVar;
     else
-    OPEN articulo_read for SELECT codigoArticulo, descripcion, cantMinima, fechaCreacion
-    FROM   articulo order by codigoArticulo;
+    OPEN articulo_read for  SELECT a.codigoArticulo, a.descripcion, a.cantMinima, a.fechaCreacion, P.PRECIO, P.PORCENTAJEUTILIDAD, P.TARIFAIMPUESTO, P.MONTOCOSTO, AE.EXISTENCIA
+    FROM   articulo a inner join ARTICULOPRECIO p on a.CODIGOARTICULO = P.CODIGOARTICULO inner join ARTICULOEXISTENCIA ae on A.CODIGOARTICULO = AE.CODIGOARTICULO order by codigoArticulo;
     end if;
  
 
