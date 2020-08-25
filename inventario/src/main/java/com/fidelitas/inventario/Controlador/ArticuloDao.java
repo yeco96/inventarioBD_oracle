@@ -29,6 +29,15 @@ public class ArticuloDao implements CRUD<Articulo> {
     @Override
     public boolean insertar(Articulo articulo, String[] callback) {
         try {
+            
+            if (articulo.getCantidadMinima()== null) {
+                callback[0] = "Debe indicar una cantidad minima valida";
+                return false;
+            }
+            if (articulo.getDescripcion()== null || articulo.getDescripcion().equals("")) {
+                callback[0] = "Debe indicar una descripcion valida";
+                return false;
+            }
             BD bd = new BD();
             CallableStatement storedProcedure = bd.storedProcedure(staticStoredProcedure.articulo.insertar);
             storedProcedure.setString(1, articulo.getDescripcion());
@@ -41,17 +50,11 @@ public class ArticuloDao implements CRUD<Articulo> {
                 callback[0] = resultSet;
             }
 
-            //storedProcedure.registerOutParameter(2, OracleTypes.CURSOR);
-            /* storedProcedure.executeQuery();
-            ResultSet resultSet = (ResultSet) storedProcedure.getObject(1);
-             */
- /*List<Integer> result = new ArrayList<Integer>();
-            while (resultSet.next()) {
-                result.add(resultSet.getInt(STUDENT_ID));
-            }*/
+            
             return true;
         } catch (SQLException ex) {
             Logger.getLogger(ArticuloDao.class.getName()).log(Level.SEVERE, null, ex);
+            callback[0]= "Ocurrio un error";
             return false;
         }
     }
@@ -59,6 +62,10 @@ public class ArticuloDao implements CRUD<Articulo> {
     @Override
     public boolean eliminar(Articulo articulo, String[] callback) {
         try {
+            if (articulo.getCodigoArticulo()== null) {
+                callback[0] = "Debe indicar un codigo valido";
+                return false;
+            }
             BD bd = new BD();
             CallableStatement storedProcedure = bd.storedProcedure(staticStoredProcedure.articulo.eliminar);
             storedProcedure.setInt(1, articulo.getCodigoArticulo());
@@ -75,10 +82,39 @@ public class ArticuloDao implements CRUD<Articulo> {
             return false;
         }
     }
-    
+   
     @Override
-    public boolean actualizar(Articulo objeto, String[] callback) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public boolean actualizar(Articulo articulo, String[] callback) {
+        try {
+
+            if (articulo.getCantidadMinima()== null) {
+                callback[0] = "Debe indicar una cantidad minima valida";
+                return false;
+            }
+
+            if (articulo.getDescripcion()== null || articulo.getDescripcion().equals("")) {
+                callback[0] = "Debe indicar una descripcion valida";
+                return false;
+            }
+
+            BD bd = new BD();
+            CallableStatement storedProcedure = bd.storedProcedure(staticStoredProcedure.articulo.actualizar);
+            storedProcedure.setString(1, articulo.getDescripcion());
+            storedProcedure.setBigDecimal(2, articulo.getCantidadMinima());
+            storedProcedure.registerOutParameter(3, OracleTypes.VARCHAR);
+
+            storedProcedure.executeQuery();
+
+            String resultSet = storedProcedure.getString(3);
+            if (resultSet != null && !resultSet.equals("")) {
+                callback[0] = resultSet;
+            }
+
+            return true;
+        } catch (SQLException ex) {
+            Logger.getLogger(ArticuloDao.class.getName()).log(Level.SEVERE, null, ex);
+            return false;
+        }
     }
     
     @Override

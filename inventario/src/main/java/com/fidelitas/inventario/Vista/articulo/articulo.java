@@ -6,9 +6,7 @@
 package com.fidelitas.inventario.Vista.articulo;
 
 import com.fidelitas.inventario.Controlador.ArticuloDao;
-import com.fidelitas.inventario.Controlador.ProveedorDao;
 import com.fidelitas.inventario.Modelo.Articulo;
-import com.fidelitas.inventario.Modelo.Proveedor;
 import com.fidelitas.inventario.Utilidades.Render;
 import com.fidelitas.inventario.Vista.menu;
 import java.awt.Color;
@@ -29,12 +27,16 @@ public class articulo extends javax.swing.JFrame {
      * Creates new form articulo
      */
     static ArrayList<String> datos = new ArrayList<String>();
+    static boolean actualizar;
     
     public articulo() {
         initComponents();
         this.setLocationRelativeTo(null);
         this.getContentPane().setBackground(Color.WHITE);
-
+        codigo.setVisible(false);
+        codigo.setEditable(false);
+        codigo_lb.setVisible(false);
+        actualizar = false;
         this.cargarDatos();
     }
 
@@ -62,6 +64,8 @@ public class articulo extends javax.swing.JFrame {
         jPanel4 = new javax.swing.JPanel();
         jPanel5 = new javax.swing.JPanel();
         mensajeError = new javax.swing.JLabel();
+        codigo_lb = new javax.swing.JLabel();
+        codigo = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -203,6 +207,23 @@ public class articulo extends javax.swing.JFrame {
         mensajeError.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         mensajeError.setText(" ");
 
+        codigo_lb.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        codigo_lb.setText("Código");
+
+        codigo.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
+        codigo.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        codigo.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        codigo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                codigoActionPerformed(evt);
+            }
+        });
+        codigo.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                codigoKeyTyped(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -212,26 +233,29 @@ public class articulo extends javax.swing.JFrame {
                 .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 378, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap(24, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(27, 27, 27)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel3)
-                            .addComponent(jLabel4))
-                        .addGap(23, 23, 23)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(txt_cantMinArtic, javax.swing.GroupLayout.PREFERRED_SIZE, 258, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(txt_DescripcionArt, javax.swing.GroupLayout.PREFERRED_SIZE, 258, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                                .addComponent(mensajeError, javax.swing.GroupLayout.PREFERRED_SIZE, 331, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(50, 50, 50))
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                                .addComponent(jB_AgregarArt, javax.swing.GroupLayout.PREFERRED_SIZE, 202, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)))))
+                        .addComponent(mensajeError, javax.swing.GroupLayout.PREFERRED_SIZE, 331, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(50, 50, 50))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jB_AgregarArt, javax.swing.GroupLayout.PREFERRED_SIZE, 202, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                                        .addComponent(jLabel4)
+                                        .addGap(4, 4, 4))
+                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                            .addComponent(codigo_lb, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addComponent(jLabel3))
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)))
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(codigo)
+                                    .addComponent(txt_DescripcionArt, javax.swing.GroupLayout.DEFAULT_SIZE, 258, Short.MAX_VALUE)
+                                    .addComponent(txt_cantMinArtic, javax.swing.GroupLayout.DEFAULT_SIZE, 258, Short.MAX_VALUE))))
+                        .addGap(28, 28, 28)))
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 492, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
             .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -243,9 +267,16 @@ public class articulo extends javax.swing.JFrame {
                 .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 344, Short.MAX_VALUE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(16, 16, 16)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(codigo_lb, javax.swing.GroupLayout.PREFERRED_SIZE, 21, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(codigo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(txt_DescripcionArt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel3))
@@ -256,8 +287,7 @@ public class articulo extends javax.swing.JFrame {
                         .addGap(18, 18, 18)
                         .addComponent(jB_AgregarArt, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(mensajeError, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 344, Short.MAX_VALUE))
+                        .addComponent(mensajeError, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
@@ -277,36 +307,49 @@ public class articulo extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jB_AgregarArtActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jB_AgregarArtActionPerformed
-        String b = txt_DescripcionArt.getText();
-        String a = txt_cantMinArtic.getText();
-
-        if (b == null || b.equals("")) {
-            JOptionPane.showMessageDialog(null, "Debe ingresar una descripcion", "Error", JOptionPane.ERROR_MESSAGE);
-            return;
+        
+    if(actualizar){    
+        Articulo articulo = new Articulo();
+        articulo.setDescripcion(txt_DescripcionArt.getText());
+        articulo.setCantidadMinima(new BigDecimal(txt_cantMinArtic.getText()));
+        
+        ArticuloDao articuloDao = new ArticuloDao();
+        String[] callback = new String[1];
+        if (articuloDao.actualizar(articulo, callback)) {
+            JOptionPane.showMessageDialog(null, callback[0]);
+        } else {
+            JOptionPane.showMessageDialog(null, callback[0], "Error", JOptionPane.ERROR_MESSAGE);
         }
-        if (a ==  null|| a.equals("")) {
-            JOptionPane.showMessageDialog(null, "Debe ingresar una cantidad minima", "Error", JOptionPane.ERROR_MESSAGE);
-            return;
+        cargarDatos();
+        
+        codigo.setVisible(false);
+        codigo.setEditable(false);
+        codigo_lb.setVisible(false);
+        actualizar = false;
+        codigo.setText("");
+        txt_DescripcionArt.setText("");
+        txt_cantMinArtic.setText("");
+        jB_AgregarArt.setText("INSERTAR");
+        
+        return;
         }
         Articulo articulo = new Articulo();
         articulo.setDescripcion(txt_DescripcionArt.getText());
-        articulo.setCantidadMinima(new BigDecimal(a));
-            
+        articulo.setCantidadMinima(new BigDecimal(txt_cantMinArtic.getText()));
+
         ArticuloDao articuloDao = new ArticuloDao();
         String[] callback = new String[1];
-        if (articuloDao.insertar(articulo, callback)) {
-            mensajeError.setText("Articulo insertado correctamente");
+        if (articuloDao.actualizar(articulo, callback)) {
+            JOptionPane.showMessageDialog(null, callback[0]);
         } else {
-            mensajeError.setText("Error al insertar");
+            JOptionPane.showMessageDialog(null, callback[0], "Error", JOptionPane.ERROR_MESSAGE);
         }
-        
-        // Articulo articulo = new Articulo();
-//        articulo.setDescripcion("nuevo");
-//        articulo.setCantidadMinima(BigDecimal.ZERO);
+        cargarDatos();
+        actualizar = false;
     }//GEN-LAST:event_jB_AgregarArtActionPerformed
-
+    
     private void jTableArticulMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTableArticulMouseClicked
-        try {
+        try{
             int colum = jTableArticul.getColumnModel().getColumnIndexAtX(evt.getX());
             int row = evt.getY() / jTableArticul.getRowHeight();
 
@@ -318,28 +361,25 @@ public class articulo extends javax.swing.JFrame {
                     JButton boton = (JButton) value;
 
                     if (boton.getName().equals("m")) {
-                        // System.out.println(String.valueOf(jTable1.getValueAt(jTable1.getSelectedRow(), 0)));
-                        String elementoViejo1 = String.valueOf(jTableArticul.getValueAt(jTableArticul.getSelectedRow(), 0)),
-                                elementoNuevo1;
-
-                        elementoNuevo1 = JOptionPane.showInputDialog(null, "Ingrese la nueva Moneda: ");
-                        if (!elementoNuevo1.equals(" ")) {
-                            String a = "MENSAJE";
-                            JOptionPane.showMessageDialog(null, a);
-                            cargarDatos();
-                        } else {
-                            JOptionPane.showMessageDialog(null, "Por favor, Dígite la información solicitada");
-                        }
-
+                        
+                        codigo.setVisible(true);
+                        codigo.setEditable(false);
+                        codigo_lb.setVisible(true);
+                        txt_DescripcionArt.setText(jTableArticul.getValueAt(jTableArticul.getSelectedRow(), 1).toString());
+                        txt_cantMinArtic.setText(jTableArticul.getValueAt(jTableArticul.getSelectedRow(), 1).toString());
+                        
+                        jB_AgregarArt.setText("ACTUALIZAR");
+                        actualizar = true;
                     }
+                     
                     if (boton.getName().equals("e")) {
                         String[] menu = {"Si", "No"};
                         int opcion = JOptionPane.showOptionDialog(
-                                null, "¿Desea eliminar el articulo codigo:" + String.valueOf(jTableArticul.getValueAt(jTableArticul.getSelectedRow(), 0)) + " de la lista de articulos", "catálogo de Articulo", JOptionPane.DEFAULT_OPTION, JOptionPane.DEFAULT_OPTION, null, menu, null
+                                null, "¿Desea eliminar el registro?", "catálogo de articulo", JOptionPane.DEFAULT_OPTION, JOptionPane.DEFAULT_OPTION, null, menu, null
                         );
                         switch (opcion) {
                             case 0:
-                                // System.out.println(String.valueOf(jTable1.getValueAt(jTable1.getSelectedRow(), 0)));
+
                                 Articulo articulo = new Articulo();
                                 articulo.setCodigoArticulo(Integer.valueOf(jTableArticul.getValueAt(jTableArticul.getSelectedRow(), 0).toString()));
 
@@ -357,10 +397,10 @@ public class articulo extends javax.swing.JFrame {
 
                                 break;
                             default:
-                                JOptionPane.showMessageDialog(null, "Opcion invalida !","Error", JOptionPane.ERROR_MESSAGE); // por si digita algo incorrecto
+                                JOptionPane.showMessageDialog(null, "Opcion invalida !", "Error", JOptionPane.ERROR_MESSAGE);
                                 break;
                         }
-                    }
+                   }
                 }
 
             }
@@ -426,8 +466,18 @@ public class articulo extends javax.swing.JFrame {
         this.setVisible(false);
     }//GEN-LAST:event_jB_VolverMActionPerformed
 
+    private void codigoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_codigoKeyTyped
+        // TODO add your handling code here:
+    }//GEN-LAST:event_codigoKeyTyped
+
+    private void codigoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_codigoActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_codigoActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JTextField codigo;
+    private javax.swing.JLabel codigo_lb;
     private javax.swing.JButton jB_AgregarArt;
     private javax.swing.JButton jB_VolverM;
     private javax.swing.JLabel jLabel1;

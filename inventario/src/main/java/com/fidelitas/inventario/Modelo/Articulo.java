@@ -22,7 +22,7 @@ public class Articulo {
     private Precio precio;
     private Existencia existencia;
 
-    public int getCodigoArticulo() {
+    public Integer getCodigoArticulo() {
         return codigoArticulo;
     }
 

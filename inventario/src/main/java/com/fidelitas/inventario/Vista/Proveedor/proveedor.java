@@ -76,6 +76,11 @@ public class proveedor extends javax.swing.JFrame {
         txt_nombreProveedor.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
         txt_nombreProveedor.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         txt_nombreProveedor.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        txt_nombreProveedor.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txt_nombreProveedorActionPerformed(evt);
+            }
+        });
         txt_nombreProveedor.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyTyped(java.awt.event.KeyEvent evt) {
                 txt_nombreProveedorKeyTyped(evt);
@@ -383,6 +388,10 @@ public class proveedor extends javax.swing.JFrame {
     private void codigoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_codigoKeyTyped
         // TODO add your handling code here:
     }//GEN-LAST:event_codigoKeyTyped
+
+    private void txt_nombreProveedorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt_nombreProveedorActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txt_nombreProveedorActionPerformed
 
     public void cargarDatos() {
         ProveedorDao proveedorDao = new ProveedorDao();
