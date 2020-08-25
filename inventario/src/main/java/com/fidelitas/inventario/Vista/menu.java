@@ -11,6 +11,7 @@ import com.fidelitas.inventario.Vista.Compra.compra;
 import com.fidelitas.inventario.Vista.Proveedor.proveedor;
 import com.fidelitas.inventario.Vista.Venta.Venta;
 import com.fidelitas.inventario.Vista.articulo.articulo;
+import com.fidelitas.inventario.Vista.reportes.reportes;
 import java.math.BigDecimal;
 
 /**
@@ -50,6 +51,7 @@ public class menu extends javax.swing.JFrame {
         jButton6 = new javax.swing.JButton();
         jBtnVenta = new javax.swing.JButton();
         jBtnCompra = new javax.swing.JButton();
+        jbtnReportes = new javax.swing.JButton();
 
         jPanel1.setBackground(new java.awt.Color(11, 51, 63));
 
@@ -247,6 +249,17 @@ public class menu extends javax.swing.JFrame {
             }
         });
 
+        jbtnReportes.setBackground(new java.awt.Color(240, 191, 0));
+        jbtnReportes.setFont(new java.awt.Font("Franklin Gothic Demi Cond", 1, 18)); // NOI18N
+        jbtnReportes.setForeground(new java.awt.Color(255, 255, 255));
+        jbtnReportes.setText("Resportes");
+        jbtnReportes.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 255, 255)));
+        jbtnReportes.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbtnReportesActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -255,7 +268,9 @@ public class menu extends javax.swing.JFrame {
             .addComponent(jPanel7, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(layout.createSequentialGroup()
                 .addGap(55, 55, 55)
-                .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 178, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jbtnReportes, javax.swing.GroupLayout.PREFERRED_SIZE, 178, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 178, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(30, 30, 30)
                 .addComponent(jButton6, javax.swing.GroupLayout.PREFERRED_SIZE, 178, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(28, 28, 28)
@@ -274,7 +289,9 @@ public class menu extends javax.swing.JFrame {
                     .addComponent(jBtnVenta, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jButton6, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jBtnCompra, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 263, Short.MAX_VALUE)
+                .addGap(39, 39, 39)
+                .addComponent(jbtnReportes, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 175, Short.MAX_VALUE)
                 .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
@@ -331,6 +348,13 @@ public class menu extends javax.swing.JFrame {
         
     }//GEN-LAST:event_jBtnCompraActionPerformed
 
+    private void jbtnReportesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtnReportesActionPerformed
+        reportes r = new reportes();
+        r.setResizable(false);
+        r.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_jbtnReportesActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jBtnCompra;
@@ -347,5 +371,6 @@ public class menu extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel6;
     private javax.swing.JPanel jPanel7;
     private javax.swing.JPanel jPanel8;
+    private javax.swing.JButton jbtnReportes;
     // End of variables declaration//GEN-END:variables
 }
