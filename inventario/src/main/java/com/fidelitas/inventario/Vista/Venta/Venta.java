@@ -13,6 +13,7 @@ import com.fidelitas.inventario.Utilidades.Render;
 import com.fidelitas.inventario.Vista.menu;
 import java.awt.Color;
 import java.math.BigDecimal;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 import javax.swing.JButton;
@@ -31,8 +32,22 @@ public class Venta extends javax.swing.JFrame {
     public Venta() {
         initComponents();
         this.setLocationRelativeTo(null);
-        txtFecha.setText(new Date().toString());
+        SimpleDateFormat format = new SimpleDateFormat("dd-MM-yyy");
+        String dateString = format.format(new Date());
+        txtFecha.setText(dateString);
+        txtTotal.setEditable(false);
         tabla();
+    }
+
+    public void calcular() {
+        txtTotal.setText("0");
+        BigDecimal total = BigDecimal.ZERO;
+        for (int i = 0; i < jTable1.getRowCount(); i++) {
+            Object o = jTable1.getValueAt(i, 4);
+
+            total = total.add(new BigDecimal(o.toString()));
+        }
+        txtTotal.setText(total.toString());
     }
 
     /**
@@ -173,7 +188,7 @@ public class Venta extends javax.swing.JFrame {
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel4, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 933, Short.MAX_VALUE)
+            .addComponent(jPanel4, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 943, Short.MAX_VALUE)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jButton5, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -199,6 +214,11 @@ public class Venta extends javax.swing.JFrame {
                 "Codigo", "Producto", "Valor C/U", "Title 4"
             }
         ));
+        jTable1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jTable1MouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(jTable1);
 
         jLabel7.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
@@ -284,9 +304,7 @@ public class Venta extends javax.swing.JFrame {
                         .addGap(184, 184, 184)
                         .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 378, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addContainerGap(346, Short.MAX_VALUE))))
-            .addGroup(jPanel2Layout.createSequentialGroup()
-                .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGap(10, 10, 10))
+            .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -389,9 +407,9 @@ public class Venta extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "El articulo no existe", "Error", JOptionPane.ERROR_MESSAGE);
             return;
         }
-        
+
         cargarArticulo(articulos.get(0), Integer.valueOf(txtCantidad.getText()));
-        
+
         txtarticulo.setText(null);
         txtCantidad.setText(null);
 
@@ -435,6 +453,7 @@ public class Venta extends javax.swing.JFrame {
         tableModel.addRow(datosObejto);
 
         jTable1.setModel(tableModel);
+        calcular();
     }
 
     private void txtnombreClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtnombreClienteActionPerformed
@@ -450,8 +469,53 @@ public class Venta extends javax.swing.JFrame {
     }//GEN-LAST:event_txtCantidadActionPerformed
 
     private void jBAgregar1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBAgregar1ActionPerformed
-        // TODO add your handling code here:
+       
+        
+        
+        
     }//GEN-LAST:event_jBAgregar1ActionPerformed
+
+    private void jTable1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable1MouseClicked
+        try {
+            int colum = jTable1.getColumnModel().getColumnIndexAtX(evt.getX());
+            int row = evt.getY() / jTable1.getRowHeight();
+
+            if (row < jTable1.getRowCount() && row >= 0 && colum < jTable1.getColumnCount() && colum >= 0) {
+
+                Object value = jTable1.getValueAt(row, colum);
+                if (value instanceof JButton) {
+                    ((JButton) value).doClick();
+                    JButton boton = (JButton) value;
+
+                    if (boton.getName().equals("e")) {
+                        String[] menu = {"Si", "No"};
+                        int opcion = JOptionPane.showOptionDialog(
+                                null, "¿Desea eliminar el registro?", "", JOptionPane.DEFAULT_OPTION, JOptionPane.DEFAULT_OPTION, null, menu, null
+                        );
+                        switch (opcion) {
+                            case 0:
+
+                                //(Integer.valueOf(jTable1.getValueAt(jTable1.getSelectedRow(), 0).toString()));
+                                //jTable1.remove(row);
+                                ((DefaultTableModel) jTable1.getModel()).removeRow(row);
+                                calcular();
+                                break;
+                            case 1:
+
+                                break;
+                            default:
+                                JOptionPane.showMessageDialog(null, "Opcion invalida !", "Error", JOptionPane.ERROR_MESSAGE);
+                                break;
+                        }
+                    }
+                }
+
+            }
+
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, e);
+        }
+    }//GEN-LAST:event_jTable1MouseClicked
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
