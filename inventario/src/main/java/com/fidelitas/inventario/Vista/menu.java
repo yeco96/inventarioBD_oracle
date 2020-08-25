@@ -252,7 +252,7 @@ public class menu extends javax.swing.JFrame {
         jbtnReportes.setBackground(new java.awt.Color(240, 191, 0));
         jbtnReportes.setFont(new java.awt.Font("Franklin Gothic Demi Cond", 1, 18)); // NOI18N
         jbtnReportes.setForeground(new java.awt.Color(255, 255, 255));
-        jbtnReportes.setText("Resportes");
+        jbtnReportes.setText("Reportes");
         jbtnReportes.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 255, 255)));
         jbtnReportes.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
