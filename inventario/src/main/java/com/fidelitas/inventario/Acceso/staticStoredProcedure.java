@@ -23,6 +23,11 @@ public class staticStoredProcedure {
 
         public static final String loggin = "{call usuario_loggin(?,?,?)}";
     }
+    
+     public static class venta {
+
+        public static final String crear = "{call insertarVenta(?,?)}";
+    }
 
     public static class proveedor {
 
