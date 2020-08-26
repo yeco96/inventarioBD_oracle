@@ -28,7 +28,7 @@ public class articulo extends javax.swing.JFrame {
      */
     static ArrayList<String> datos = new ArrayList<String>();
     static boolean actualizar;
-    
+
     public articulo() {
         initComponents();
         this.setLocationRelativeTo(null);
@@ -307,31 +307,32 @@ public class articulo extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jB_AgregarArtActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jB_AgregarArtActionPerformed
-        
-    if(actualizar){    
-        Articulo articulo = new Articulo();
-        articulo.setDescripcion(txt_DescripcionArt.getText());
-        articulo.setCantidadMinima(new BigDecimal(txt_cantMinArtic.getText()));
-        
-        ArticuloDao articuloDao = new ArticuloDao();
-        String[] callback = new String[1];
-        if (articuloDao.actualizar(articulo, callback)) {
-            JOptionPane.showMessageDialog(null, callback[0]);
-        } else {
-            JOptionPane.showMessageDialog(null, callback[0], "Error", JOptionPane.ERROR_MESSAGE);
-        }
-        cargarDatos();
-        
-        codigo.setVisible(false);
-        codigo.setEditable(false);
-        codigo_lb.setVisible(false);
-        actualizar = false;
-        codigo.setText("");
-        txt_DescripcionArt.setText("");
-        txt_cantMinArtic.setText("");
-        jB_AgregarArt.setText("INSERTAR");
-        
-        return;
+
+        if (actualizar) {
+            Articulo articulo = new Articulo();
+            articulo.setCodigoArticulo(Integer.valueOf(codigo.getText()));
+            articulo.setDescripcion(txt_DescripcionArt.getText());
+            articulo.setCantidadMinima(new BigDecimal(txt_cantMinArtic.getText()));
+
+            ArticuloDao articuloDao = new ArticuloDao();
+            String[] callback = new String[1];
+            if (articuloDao.actualizar(articulo, callback)) {
+                JOptionPane.showMessageDialog(null, callback[0]);
+            } else {
+                JOptionPane.showMessageDialog(null, callback[0], "Error", JOptionPane.ERROR_MESSAGE);
+            }
+            cargarDatos();
+
+            codigo.setVisible(false);
+            codigo.setEditable(false);
+            codigo_lb.setVisible(false);
+            actualizar = false;
+            codigo.setText("");
+            txt_DescripcionArt.setText("");
+            txt_cantMinArtic.setText("");
+            jB_AgregarArt.setText("INSERTAR");
+
+            return;
         }
         Articulo articulo = new Articulo();
         articulo.setDescripcion(txt_DescripcionArt.getText());
@@ -347,9 +348,9 @@ public class articulo extends javax.swing.JFrame {
         cargarDatos();
         actualizar = false;
     }//GEN-LAST:event_jB_AgregarArtActionPerformed
-    
+
     private void jTableArticulMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTableArticulMouseClicked
-        try{
+        try {
             int colum = jTableArticul.getColumnModel().getColumnIndexAtX(evt.getX());
             int row = evt.getY() / jTableArticul.getRowHeight();
 
@@ -361,18 +362,18 @@ public class articulo extends javax.swing.JFrame {
                     JButton boton = (JButton) value;
 
                     if (boton.getName().equals("m")) {
-                        
+
                         codigo.setVisible(true);
                         codigo.setEditable(false);
                         codigo_lb.setVisible(true);
                         codigo.setText(jTableArticul.getValueAt(jTableArticul.getSelectedRow(), 0).toString());
                         txt_DescripcionArt.setText(jTableArticul.getValueAt(jTableArticul.getSelectedRow(), 1).toString());
                         txt_cantMinArtic.setText(jTableArticul.getValueAt(jTableArticul.getSelectedRow(), 2).toString());
-                        
+
                         jB_AgregarArt.setText("ACTUALIZAR");
                         actualizar = true;
                     }
-                     
+
                     if (boton.getName().equals("e")) {
                         String[] menu = {"Si", "No"};
                         int opcion = JOptionPane.showOptionDialog(
@@ -401,7 +402,7 @@ public class articulo extends javax.swing.JFrame {
                                 JOptionPane.showMessageDialog(null, "Opcion invalida !", "Error", JOptionPane.ERROR_MESSAGE);
                                 break;
                         }
-                   }
+                    }
                 }
 
             }
@@ -414,8 +415,8 @@ public class articulo extends javax.swing.JFrame {
         ArticuloDao articuloDao = new ArticuloDao();
         String[] callback = new String[1];
         List<Articulo> articulox = articuloDao.leer(null, callback);
-        
-        if(articulox == null){
+
+        if (articulox == null) {
             return;
         }
 
@@ -433,7 +434,7 @@ public class articulo extends javax.swing.JFrame {
         btn2.setName("e");
         btn2.setBackground(color1);
         btn2.setForeground(Color.white);
-        String[] columnNames = {"Codigo", "Descripcion","Cantidad Minima", "Fecha", "", ""};
+        String[] columnNames = {"Codigo", "Descripcion", "Cantidad Minima", "Fecha", "", ""};
 
         DefaultTableModel tableModel = new DefaultTableModel() {
             @Override
@@ -460,7 +461,7 @@ public class articulo extends javax.swing.JFrame {
         jTableArticul.setRowHeight(30);
 
     }
-    
+
     private void jB_VolverMActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jB_VolverMActionPerformed
         menu ocb2 = new menu();
         ocb2.setVisible(true);

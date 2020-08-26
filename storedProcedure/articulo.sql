@@ -79,7 +79,8 @@ end;
 CREATE OR REPLACE PROCEDURE articulo_update(
     codigoArticuloVar ARTICULO.CODIGOARTICULO%TYPE,
     descripcionVar ARTICULO.descripcion%TYPE,
-    cantMinimaVar ARTICULO.cantMinima%TYPE, P_RESULT OUT VARCHAR2)
+    cantMinimaVar ARTICULO.cantMinima%TYPE, 
+    P_RESULT OUT VARCHAR2)
 AS 
 BEGIN 
 UPDATE articulo

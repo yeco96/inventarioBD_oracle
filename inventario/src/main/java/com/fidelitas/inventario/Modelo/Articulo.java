@@ -14,7 +14,7 @@ import java.util.Date;
  */
 public class Articulo {
     
-    private int codigoArticulo;
+    private Integer codigoArticulo;
     private String descripcion;
     private BigDecimal cantidadMinima;
     private Date fechaCreacion;
@@ -26,7 +26,7 @@ public class Articulo {
         return codigoArticulo;
     }
 
-    public void setCodigoArticulo(int codigoArticulo) {
+    public void setCodigoArticulo(Integer codigoArticulo) {
         this.codigoArticulo = codigoArticulo;
     }
 
