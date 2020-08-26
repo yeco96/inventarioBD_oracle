@@ -365,8 +365,9 @@ public class articulo extends javax.swing.JFrame {
                         codigo.setVisible(true);
                         codigo.setEditable(false);
                         codigo_lb.setVisible(true);
+                        codigo.setText(jTableArticul.getValueAt(jTableArticul.getSelectedRow(), 0).toString());
                         txt_DescripcionArt.setText(jTableArticul.getValueAt(jTableArticul.getSelectedRow(), 1).toString());
-                        txt_cantMinArtic.setText(jTableArticul.getValueAt(jTableArticul.getSelectedRow(), 1).toString());
+                        txt_cantMinArtic.setText(jTableArticul.getValueAt(jTableArticul.getSelectedRow(), 2).toString());
                         
                         jB_AgregarArt.setText("ACTUALIZAR");
                         actualizar = true;
