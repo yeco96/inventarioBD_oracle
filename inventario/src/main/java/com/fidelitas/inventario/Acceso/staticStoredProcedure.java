@@ -26,7 +26,7 @@ public class staticStoredProcedure {
     
      public static class venta {
 
-        public static final String crear = "{call venta_insert(?, ?, ?, ?, ?)}";
+        public static final String crear = "{call venta_insert(?, ?, ?, ?, ?, ?)}";
     }
 
     public static class proveedor {
@@ -38,7 +38,7 @@ public class staticStoredProcedure {
     }
     public static class compra {
 
-        public static final String insertar = "{call proveedor_insert(?,?,?,?,?,?,?,?)}";
+        public static final String crear = "{call compra_insert(?,?,?,?,?,?)}";
         
     }
 

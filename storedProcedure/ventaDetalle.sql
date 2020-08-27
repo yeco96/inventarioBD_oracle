@@ -1,0 +1,15 @@
+CREATE OR REPLACE PROCEDURE ventaDetalle_insert (
+	   codigoventavar VENTADETALLE.CODIGOVENTA%TYPE,
+	   codigoarticulovar VENTADETALLE.CODIGOARTICULO%TYPE,
+       preciovar VENTADETALLE.PRECIO%TYPE)
+AS
+
+BEGIN
+
+INSERT INTO VENTADETALLE  
+    (CODIGOVENTA, CODIGOARTICULO, PRECIO)
+    VALUES (codigoventavar,codigoarticulovar, preciovar);
+
+COMMIT;  
+END;
+/

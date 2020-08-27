@@ -3,7 +3,7 @@ drop table articuloExistencia;
 drop table articulo;
 drop table Proveedor;
 drop table Usuario;
-drop table CompraDetalle;
+drop table inventario.CompraDetalle;
 drop table Compra;
 drop table VentaDetalle;
 drop table Venta;
@@ -44,12 +44,13 @@ CONSTRAINT compra_usuario_FK FOREIGN KEY (usuarioRegistro)
 
   
 create table inventario.CompraDetalle 
-(codigoCompra int,codigoArticulo int, cantidadCompra NUMBER(18,3), montoCosto NUMBER(18,3),
+(codigoCompra int,codigoArticulo int, cantidadCompra NUMBER(18,3), montoCosto NUMBER(18,3),fechaVencimiento Date,
 CONSTRAINT CompraDetalle_PK PRIMARY KEY (codigoCompra, codigoArticulo),
 CONSTRAINT CompraDetalle_compra_FK FOREIGN KEY (codigoCompra)
   REFERENCES inventario.Compra (codigoCompra) ENABLE,
 CONSTRAINT codigoArticulo_compra_FK FOREIGN KEY (codigoArticulo)
   REFERENCES inventario.articulo (codigoArticulo) ENABLE);
+ 
   
 create table inventario.Venta 
 (codigoVenta int, factura NUMBER(20,0), identificacionCliente NUMBER(12,0), nombreCliente varchar2(100), montoVenta NUMBER(18,3),fechaVenta Date, usuarioRegistro varchar2(20 BYTE),

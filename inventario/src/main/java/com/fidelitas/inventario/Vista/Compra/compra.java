@@ -6,8 +6,8 @@
 package com.fidelitas.inventario.Vista.Compra;
 
 import com.fidelitas.inventario.Controlador.ArticuloDao;
-import com.fidelitas.inventario.Controlador.CompraDao;
 import com.fidelitas.inventario.Controlador.ProveedorDao;
+import com.fidelitas.inventario.Controlador.TransaccionesDao;
 import com.fidelitas.inventario.Modelo.Articulo;
 import com.fidelitas.inventario.Modelo.Compra;
 import com.fidelitas.inventario.Modelo.Proveedor;
@@ -502,14 +502,14 @@ public class compra extends javax.swing.JFrame {
             return;
         }
 
-        CompraDao c = new CompraDao();
+        TransaccionesDao c = new TransaccionesDao();
         String[] callback = new String[1];
-        List<Compra> compra = c.leer(Integer.valueOf(txtCODArti.getText()), callback);
+        //List<Compra> compra = c.insertarCompra(Integer.valueOf(txtCODArti.getText()), callback);
 
-        if (compra == null || compra.isEmpty()) {
-            JOptionPane.showMessageDialog(null, "El articulo no existe", "Error", JOptionPane.ERROR_MESSAGE);
-            return;
-        }
+        //if (compra == null || compra.isEmpty()) {
+            //JOptionPane.showMessageDialog(null, "El articulo no existe", "Error", JOptionPane.ERROR_MESSAGE);
+            //return;
+       // }
 
         //cargarArticulo(articulos.get(0), Integer.valueOf(txtCant.getText()));
 

@@ -7,6 +7,7 @@ package com.fidelitas.inventario.Controlador;
 
 import com.fidelitas.inventario.Acceso.BD;
 import com.fidelitas.inventario.Acceso.staticStoredProcedure;
+import com.fidelitas.inventario.Modelo.Compra;
 import com.fidelitas.inventario.Modelo.Venta;
 import java.sql.Array;
 import java.sql.CallableStatement;
@@ -35,6 +36,37 @@ public class TransaccionesDao {
             storedProcedure.registerOutParameter(5, OracleTypes.VARCHAR);
             storedProcedure.executeQuery();
 
+            String resultSet = storedProcedure.getString(5);
+            if (resultSet != null && !resultSet.equals("")) {
+                if (resultSet.contains("codigoSiguiente")) {
+                    callback[0] = resultSet.replace("codigoSiguiente:", "");
+                } else {
+                    callback[0] = resultSet;
+                    return false;
+                }
+            }
+
+            return true;
+        } catch (SQLException ex) {
+            Logger.getLogger(ArticuloDao.class.getName()).log(Level.SEVERE, null, ex);
+            callback[0] = "Ocurrio un error";
+            return false;
+        }
+    }
+    
+
+    public boolean insertarCompra(Compra compra, String[] callback) {
+        try {
+            BD bd = new BD();
+            CallableStatement storedProcedure = bd.storedProcedure(staticStoredProcedure.compra.crear);
+            storedProcedure.setInt(1, compra.getFactura());
+            storedProcedure.setInt(2, compra.getCodigoProveedor());
+            storedProcedure.setBigDecimal(3, compra.getMontoCompra());
+            storedProcedure.setString(4, "gmena");
+            
+            storedProcedure.registerOutParameter(5, OracleTypes.VARCHAR);
+            storedProcedure.executeQuery();
+            
             String resultSet = storedProcedure.getString(5);
             if (resultSet != null && !resultSet.equals("")) {
                 if (resultSet.contains("codigoSiguiente")) {
