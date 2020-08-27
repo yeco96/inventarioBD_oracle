@@ -582,10 +582,13 @@ public class compra extends javax.swing.JFrame {
             for (int i = 0; i < jTable1.getRowCount(); i++) {
                 Object precio = jTable1.getValueAt(i, 3);
                 Object codigo = jTable1.getValueAt(i, 0);
+                
+                Object cantidad = jTable1.getValueAt(i, 2);
 
                 CompraDetalle detalle = new CompraDetalle();
                 detalle.setCodigoArticulo(Integer.valueOf(codigo.toString()));
                 detalle.setMontoCosto(new BigDecimal(precio.toString()));
+                detalle.setCantidadCompra(new BigDecimal(cantidad.toString()));
                 detalle.setFechaVencimiento(jdateFechaVen.getDate());
                 compra.getDetalle().add(detalle);
             }
