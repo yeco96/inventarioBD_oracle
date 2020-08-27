@@ -1,11 +1,8 @@
 CREATE OR REPLACE PROCEDURE compra_insert (
-	   facturavar COMPRA.FACTURA%TYPE,
-	   codigoproveedorvar	COMPRA.CODIGOPROVEEDOR%TYPE,
+     facturavar COMPRA.FACTURA%TYPE,
+     codigoproveedorvar COMPRA.CODIGOPROVEEDOR%TYPE,
        montocompravar COMPRA.MONTOCOMPRA%TYPE,
        usuarioregistrovar COMPRA.USUARIOREGISTRO%TYPE,
-       codigoArticulovar COMPRADETALLE.CODIGOARTICULO%TYPE,
-       cantidadcompravar COMPRADETALLE.CANTIDADCOMPRA%TYPE,
-       montocostovar COMPRADETALLE.MONTOCOSTO%TYPE,
        P_RESULT OUT VARCHAR2)
 IS
 codigoSiguiente int;
@@ -33,9 +30,7 @@ INSERT INTO COMPRA
     (CODIGOCOMPRA, FACTURA, CODIGOPROVEEDOR, MONTOCOMPRA,FECHACOMPRA, USUARIOREGISTRO)
     VALUES (codigoSiguiente,facturavar, codigoproveedorvar, montocompravar,sysdate,usuarioregistrovar);
 
-INSERT INTO COMPRADETALLE
-    (CODIGOCOMPRA, CODIGOARTICULO, CANTIDADCOMPRA, MONTOCOSTO)
-    VALUES (codigoSiguiente,codigoArticulovar, cantidadcompravar, montocostovar);
+P_RESULT := 'codigoSiguiente:' || codigoSiguiente;  
 
 COMMIT;  
 END;

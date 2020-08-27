@@ -120,7 +120,7 @@ public class TransaccionesDao {
 
             boolean error = false;
             for (CompraDetalle d : compra.getDetalle()) {
-                CallableStatement storedProcedureDetalle = bd.storedProcedure(staticStoredProcedure.venta.crearDetalle);
+                CallableStatement storedProcedureDetalle = bd.storedProcedure(staticStoredProcedure.compra.crearDetalle);
                 try {
                     storedProcedureDetalle.setInt(1, d.getCodigoCompra());
                     storedProcedureDetalle.setInt(2, d.getCodigoArticulo());

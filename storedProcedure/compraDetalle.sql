@@ -1,15 +1,17 @@
 CREATE OR REPLACE PROCEDURE compraDetalle_insert (
-	   codigocompra COMPRADETALLE.CODIGOCOMPRA%TYPE,
-	   codigoarticulo COMPRADETALLE.CODIGOARTICULO%TYPE,
-       cantidadcompra COMPRADETALLE.CANTIDADCOMPRA%TYPE,
-       montocosto COMPRADETALLE.MONTOCOSTO%TYPE)
+	   codigocompraVar COMPRADETALLE.CODIGOCOMPRA%TYPE,
+	   codigoarticuloVar COMPRADETALLE.CODIGOARTICULO%TYPE,
+       cantidadcompraVar COMPRADETALLE.CANTIDADCOMPRA%TYPE,
+       MONTOCOSTOVar COMPRADETALLE.MONTOCOSTO%TYPE,
+       fechaVencimientoVar COMPRADETALLE.fechaVencimiento%TYPE,
+       P_RESULT OUT VARCHAR2)
 AS
 
 BEGIN
 
 INSERT INTO COMPRADETALLE  
-    (CODIGOCOMPRA, CODIGOARTICULO, CANTIDADCOMPRA, MONTOCOSTO)
-    VALUES (codigocompra,codigoarticulo, cantidadcompra, montocosto);
+    (CODIGOCOMPRA, CODIGOARTICULO, CANTIDADCOMPRA, MONTOCOSTO, fechaVencimiento)
+    VALUES (codigocompraVar,codigoarticuloVar, cantidadcompraVar, MONTOCOSTOVar, fechaVencimientoVar);
 
 COMMIT;  
 END;
