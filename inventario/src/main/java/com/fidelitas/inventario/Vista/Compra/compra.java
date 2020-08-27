@@ -10,7 +10,10 @@ import com.fidelitas.inventario.Controlador.ProveedorDao;
 import com.fidelitas.inventario.Controlador.TransaccionesDao;
 import com.fidelitas.inventario.Modelo.Articulo;
 import com.fidelitas.inventario.Modelo.Compra;
+import com.fidelitas.inventario.Modelo.CompraDetalle;
 import com.fidelitas.inventario.Modelo.Proveedor;
+import com.fidelitas.inventario.Modelo.Venta;
+import com.fidelitas.inventario.Modelo.VentaDetalle;
 import com.fidelitas.inventario.Utilidades.Render;
 import com.fidelitas.inventario.Vista.menu;
 import java.awt.Color;
@@ -41,6 +44,8 @@ public class compra extends javax.swing.JFrame {
         SimpleDateFormat format = new SimpleDateFormat("dd-MM-yyy");
         String dateString = format.format(new Date());
         txtFecha.setText(dateString);
+        txtTotal.setEditable(false);
+        txtTotal.setText("0");
         tabla();
     }
     public void calcular() {
@@ -52,6 +57,16 @@ public class compra extends javax.swing.JFrame {
             total = total.add(new BigDecimal(o.toString()));
         }
         txtTotal.setText(total.toString());
+    }
+    
+    public void limpiar() {
+        for (int i = 0; i <= jTable1.getRowCount(); i++) {
+            ((DefaultTableModel) jTable1.getModel()).removeRow(i);
+        }
+        calcular();
+        txtCODArti.setText("");
+        txtCant.setText("");
+        txtCostArt.setText("");
     }
 
     /**
@@ -491,10 +506,9 @@ public class compra extends javax.swing.JFrame {
     }//GEN-LAST:event_jTable1MouseClicked
 
     private void agregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_agregarActionPerformed
-
         if (txtFactu.getText() == null || txtFactu.getText().equals("")) {
-            JOptionPane.showMessageDialog(null, "Debe ingresar un numero de factura", "Error", JOptionPane.ERROR_MESSAGE);
-            return;
+                JOptionPane.showMessageDialog(null, "Debe ingresar un numero de factura", "Error", JOptionPane.ERROR_MESSAGE);
+                return;
         }
 
         if (txtCODProvee.getText() == null || txtCODProvee.getText().equals("")) {
@@ -553,7 +567,39 @@ public class compra extends javax.swing.JFrame {
     }//GEN-LAST:event_txtTotalActionPerformed
 
     private void jBAgregar1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBAgregar1ActionPerformed
-        // TODO add your handling code here:
+        try{
+   
+            TransaccionesDao dao = new TransaccionesDao();
+            String[] callback = new String[1];
+
+            Compra compra = new Compra();
+            
+            compra.setFactura(Integer.parseInt(txtFactu.getText()));
+            compra.setCodigoProveedor(Integer.parseInt(txtCODProvee.getText()));
+            compra.setMontoCompra(new BigDecimal(txtTotal.getText()));
+            compra.setUsuarioRegistro("gmena");
+            compra.setDetalle(new ArrayList<>());
+            for (int i = 0; i < jTable1.getRowCount(); i++) {
+                Object precio = jTable1.getValueAt(i, 3);
+                Object codigo = jTable1.getValueAt(i, 0);
+
+                CompraDetalle detalle = new CompraDetalle();
+                detalle.setCodigoArticulo(Integer.valueOf(codigo.toString()));
+                detalle.setMontoCosto(new BigDecimal(precio.toString()));
+                detalle.setFechaVencimiento(jdateFechaVen.getDate());
+                compra.getDetalle().add(detalle);
+            }
+
+            if (!dao.insertarCompra(compra, callback)) {
+                JOptionPane.showMessageDialog(null, callback, "Error", JOptionPane.ERROR_MESSAGE);
+            } else {
+                JOptionPane.showMessageDialog(null, "Correcto");
+                limpiar();
+            }
+
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        }
     }//GEN-LAST:event_jBAgregar1ActionPerformed
     public void tabla() {
         jTable1.setDefaultRenderer(Object.class, new Render());

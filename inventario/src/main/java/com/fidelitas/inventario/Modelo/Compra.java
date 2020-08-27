@@ -7,6 +7,7 @@ package com.fidelitas.inventario.Modelo;
 
 import java.math.BigDecimal;
 import java.util.Date;
+import java.util.List;
 
 /**
  *
@@ -20,6 +21,8 @@ public class Compra {
     private BigDecimal montoCompra;
     private Date fechaCompra;
     private String usuarioRegistro;
+    
+    private List<CompraDetalle> detalle;
 
     public int getCodigoCompra() {
         return codigoCompra;
@@ -67,6 +70,14 @@ public class Compra {
 
     public void setUsuarioRegistro(String usuarioRegistro) {
         this.usuarioRegistro = usuarioRegistro;
+    }
+
+    public List<CompraDetalle> getDetalle() {
+        return detalle;
+    }
+
+    public void setDetalle(List<CompraDetalle> detalle) {
+        this.detalle = detalle;
     }
 
     

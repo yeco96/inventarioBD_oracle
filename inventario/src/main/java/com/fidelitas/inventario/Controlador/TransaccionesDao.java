@@ -32,7 +32,7 @@ public class TransaccionesDao {
             storedProcedure.setInt(1, venta.getIdentificacionCliente());
             storedProcedure.setString(2, venta.getNombreCliente());
             storedProcedure.setBigDecimal(3, venta.getMontoVenta());
-            storedProcedure.setString(4, "yeco");
+            storedProcedure.setString(4, "gmena");
 
             storedProcedure.registerOutParameter(5, OracleTypes.VARCHAR);
             storedProcedure.executeQuery();
