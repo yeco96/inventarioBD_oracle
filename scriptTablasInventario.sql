@@ -1,8 +1,8 @@
+drop table Usuario;
 drop table articuloPrecio;
 drop table articuloExistencia;
 drop table articulo;
 drop table Proveedor;
-drop table Usuario;
 drop table inventario.CompraDetalle;
 drop table Compra;
 drop table VentaDetalle;
@@ -59,7 +59,7 @@ CONSTRAINT usuarioRegistro_Venta_FK FOREIGN KEY (usuarioRegistro)
   REFERENCES inventario.Usuario (usuario) ENABLE);
   
 create table inventario.VentaDetalle 
-(codigoVenta int, codigoArticulo int, precio  NUMBER(18,3),
+(codigoVenta int, codigoArticulo int, cantidad int, precio  NUMBER(18,3),
 CONSTRAINT VentaDetalle_PK PRIMARY KEY (codigoVenta, codigoArticulo),
 CONSTRAINT codigoVenta_detalle_FK FOREIGN KEY (codigoVenta)
   REFERENCES inventario.Venta (codigoVenta) ENABLE,
@@ -77,3 +77,4 @@ CONSTRAINT codigoArticulo_Movimiento_FK FOREIGN KEY (codigoArticulo)
 
 
 insert into Usuario values('yeco', 'Yeison', '123' );
+insert into Usuario values('gmena', 'Yeison', '123' );

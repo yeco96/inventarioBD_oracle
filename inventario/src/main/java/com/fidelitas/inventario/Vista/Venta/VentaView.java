@@ -58,9 +58,13 @@ public class VentaView extends javax.swing.JFrame {
     }
 
     public void limpiar() {
-        for (int i = 0; i <= jTable1.getRowCount(); i++) {
-            ((DefaultTableModel) jTable1.getModel()).removeRow(i);
+
+        DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
+        int rows = model.getRowCount();
+        for (int i = rows - 1; i >= 0; i--) {
+            model.removeRow(i);
         }
+
         calcular();
         txtidCliente.setText("");
         txtnombreCliente.setText("");
@@ -99,6 +103,7 @@ public class VentaView extends javax.swing.JFrame {
         jLabel9 = new javax.swing.JLabel();
         txtCantidad = new javax.swing.JTextField();
         jBAgregar1 = new javax.swing.JButton();
+        jButton1 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -272,6 +277,13 @@ public class VentaView extends javax.swing.JFrame {
             }
         });
 
+        jButton1.setText("LIMPIAR");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
@@ -309,12 +321,15 @@ public class VentaView extends javax.swing.JFrame {
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                         .addComponent(agregar, javax.swing.GroupLayout.PREFERRED_SIZE, 168, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addGap(158, 158, 158))))
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                .addComponent(jBAgregar1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                                    .addComponent(jLabel3)
-                                    .addGap(18, 18, 18)
-                                    .addComponent(txtTotal, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                                .addComponent(jButton1)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(jBAgregar1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                                        .addComponent(jLabel3)
+                                        .addGap(18, 18, 18)
+                                        .addComponent(txtTotal, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)))))
                         .addGap(40, 40, 40))
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGap(184, 184, 184)
@@ -351,7 +366,9 @@ public class VentaView extends javax.swing.JFrame {
                     .addComponent(txtTotal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel3))
                 .addGap(18, 18, 18)
-                .addComponent(jBAgregar1, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jBAgregar1, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jButton1))
                 .addGap(11, 11, 11)
                 .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
@@ -451,6 +468,26 @@ public class VentaView extends javax.swing.JFrame {
 
     public void cargarArticulo(Articulo a, Integer cantidad) {
 
+        if (a.getExistencia().getEXISTENCIA().compareTo(new BigDecimal(cantidad)) < 0) {
+            JOptionPane.showMessageDialog(null, "No hay existencia", "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
+        boolean aviso = false;
+        for (int i = 0; i < jTable1.getRowCount(); i++) {
+            Object codigo = jTable1.getValueAt(i, 0);
+
+            if (codigo == a.getCodigoArticulo()) {
+                aviso = true;
+                break;
+            }
+        }
+
+        if (aviso) {
+            JOptionPane.showMessageDialog(null, "La el articulo esta en el detalle", "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
         Color color1 = new Color(199, 80, 80);
         JButton btn2 = new JButton("Eliminar");
         btn2.setName("e");
@@ -504,11 +541,13 @@ public class VentaView extends javax.swing.JFrame {
             venta.setDetalle(new ArrayList<>());
             for (int i = 0; i < jTable1.getRowCount(); i++) {
                 Object precio = jTable1.getValueAt(i, 3);
+                Object cantidad = jTable1.getValueAt(i, 2);
                 Object codigo = jTable1.getValueAt(i, 0);
 
                 VentaDetalle detalle = new VentaDetalle();
                 detalle.setPrecio(new BigDecimal(precio.toString()));
                 detalle.setCodigoArticulo(Integer.valueOf(codigo.toString()));
+                detalle.setCantidad(new BigDecimal(cantidad.toString()));
                 venta.getDetalle().add(detalle);
             }
 
@@ -566,10 +605,15 @@ public class VentaView extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_jTable1MouseClicked
 
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        limpiar();
+    }//GEN-LAST:event_jButton1ActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton agregar;
     private javax.swing.JButton jBAgregar1;
+    private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton5;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;

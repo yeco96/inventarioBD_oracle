@@ -1,6 +1,7 @@
 CREATE OR REPLACE PROCEDURE ventaDetalle_insert (
 	   codigoventavar VENTADETALLE.CODIGOVENTA%TYPE,
 	   codigoarticulovar VENTADETALLE.CODIGOARTICULO%TYPE,
+       cantidadVar VENTADETALLE.CANTIDAD%TYPE,
        preciovar VENTADETALLE.PRECIO%TYPE,
        P_RESULT OUT VARCHAR2)
 AS
@@ -8,8 +9,10 @@ AS
 BEGIN
 
 INSERT INTO VENTADETALLE  
-    (CODIGOVENTA, CODIGOARTICULO, PRECIO)
-    VALUES (codigoventavar,codigoarticulovar, preciovar);
+    (CODIGOVENTA, CODIGOARTICULO, PRECIO, CANTIDAD)
+    VALUES (codigoventavar,codigoarticulovar, preciovar, cantidadVar);
+    
+update ARTICULOEXISTENCIA set EXISTENCIA = (EXISTENCIA - cantidadVar) where CODIGOARTICULO = codigoarticulovar;
 
 P_RESULT := 'Correcto';  
 

@@ -60,11 +60,12 @@ public class TransaccionesDao {
                 try {
                     storedProcedureDetalle.setInt(1, d.getCodigoVenta());
                     storedProcedureDetalle.setInt(2, d.getCodigoArticulo());
-                    storedProcedureDetalle.setBigDecimal(3, d.getPrecio());
-                    storedProcedureDetalle.registerOutParameter(4, OracleTypes.VARCHAR);
+                    storedProcedureDetalle.setBigDecimal(3, d.getCantidad());
+                    storedProcedureDetalle.setBigDecimal(4, d.getPrecio());
+                    storedProcedureDetalle.registerOutParameter(5, OracleTypes.VARCHAR);
                     storedProcedureDetalle.executeQuery();
 
-                    String resultSetDetalle = storedProcedureDetalle.getString(4);
+                    String resultSetDetalle = storedProcedureDetalle.getString(5);
 
                     if (!resultSetDetalle.equals("Correcto")) {
                         error = true;

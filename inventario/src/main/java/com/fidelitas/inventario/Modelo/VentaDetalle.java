@@ -16,6 +16,7 @@ public class VentaDetalle {
     private int codigoVenta;
     private int codigoArticulo;
     private BigDecimal precio;
+    private BigDecimal cantidad;
 
     public int getCodigoVenta() {
         return codigoVenta;
@@ -39,6 +40,14 @@ public class VentaDetalle {
 
     public void setPrecio(BigDecimal precio) {
         this.precio = precio;
+    }
+
+    public BigDecimal getCantidad() {
+        return cantidad;
+    }
+
+    public void setCantidad(BigDecimal cantidad) {
+        this.cantidad = cantidad;
     }
     
     
