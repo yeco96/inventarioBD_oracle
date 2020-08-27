@@ -41,6 +41,8 @@ public class VentaView extends javax.swing.JFrame {
         txtFecha.setText(dateString);
         txtTotal.setEditable(false);
         txtTotal.setText("0");
+        txtidCliente.setText("");
+        txtnombreCliente.setText("");
         tabla();
     }
 
@@ -53,6 +55,15 @@ public class VentaView extends javax.swing.JFrame {
             total = total.add(new BigDecimal(o.toString()));
         }
         txtTotal.setText(total.toString());
+    }
+
+    public void limpiar() {
+        for (int i = 0; i <= jTable1.getRowCount(); i++) {
+            ((DefaultTableModel) jTable1.getModel()).removeRow(i);
+        }
+        calcular();
+        txtidCliente.setText("");
+        txtnombreCliente.setText("");
     }
 
     /**
@@ -503,8 +514,11 @@ public class VentaView extends javax.swing.JFrame {
 
             if (!dao.insertarVenta(venta, callback)) {
                 JOptionPane.showMessageDialog(null, callback, "Error", JOptionPane.ERROR_MESSAGE);
+            } else {
+                JOptionPane.showMessageDialog(null, "Correcto");
+                limpiar();
             }
-            JOptionPane.showMessageDialog(null, "Correcto");
+
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
         }

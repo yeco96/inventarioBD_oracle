@@ -9,6 +9,7 @@ import com.fidelitas.inventario.Acceso.BD;
 import com.fidelitas.inventario.Acceso.staticStoredProcedure;
 import com.fidelitas.inventario.Modelo.Compra;
 import com.fidelitas.inventario.Modelo.Venta;
+import com.fidelitas.inventario.Modelo.VentaDetalle;
 import java.sql.Array;
 import java.sql.CallableStatement;
 import java.sql.SQLException;
@@ -46,6 +47,39 @@ public class TransaccionesDao {
                 }
             }
 
+            venta.getDetalle().forEach(d -> {
+                d.setCodigoVenta(Integer.valueOf(callback[0]));
+            });
+
+            boolean error = false;
+            for (VentaDetalle d : venta.getDetalle()) {
+                CallableStatement storedProcedureDetalle = bd.storedProcedure(staticStoredProcedure.venta.crearDetalle);
+                try {
+                    storedProcedureDetalle.setInt(1, d.getCodigoVenta());
+                    storedProcedureDetalle.setInt(2, d.getCodigoArticulo());
+                    storedProcedureDetalle.setBigDecimal(3, d.getPrecio());
+                    storedProcedureDetalle.registerOutParameter(4, OracleTypes.VARCHAR);
+                    storedProcedureDetalle.executeQuery();
+
+                    String resultSetDetalle = storedProcedureDetalle.getString(4);
+
+                    if (!resultSetDetalle.equals("Correcto")) {
+                        error = true;
+                        break;
+                    }
+
+                } catch (SQLException ex) {
+                    error = true;
+                    Logger.getLogger(TransaccionesDao.class.getName()).log(Level.SEVERE, null, ex);
+                     break;
+                }
+            }
+
+            if (error) {
+                callback[0] = "Ocurrio un error";
+                return false;
+            }
+
             return true;
         } catch (SQLException ex) {
             Logger.getLogger(ArticuloDao.class.getName()).log(Level.SEVERE, null, ex);
@@ -53,7 +87,6 @@ public class TransaccionesDao {
             return false;
         }
     }
-    
 
     public boolean insertarCompra(Compra compra, String[] callback) {
         try {
@@ -63,10 +96,10 @@ public class TransaccionesDao {
             storedProcedure.setInt(2, compra.getCodigoProveedor());
             storedProcedure.setBigDecimal(3, compra.getMontoCompra());
             storedProcedure.setString(4, "gmena");
-            
+
             storedProcedure.registerOutParameter(5, OracleTypes.VARCHAR);
             storedProcedure.executeQuery();
-            
+
             String resultSet = storedProcedure.getString(5);
             if (resultSet != null && !resultSet.equals("")) {
                 if (resultSet.contains("codigoSiguiente")) {
