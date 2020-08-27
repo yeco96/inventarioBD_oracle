@@ -40,6 +40,7 @@ public class VentaView extends javax.swing.JFrame {
         String dateString = format.format(new Date());
         txtFecha.setText(dateString);
         txtTotal.setEditable(false);
+        txtTotal.setText("0");
         tabla();
     }
 
@@ -474,22 +475,39 @@ public class VentaView extends javax.swing.JFrame {
 
     private void jBAgregar1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBAgregar1ActionPerformed
 
-        TransaccionesDao dao = new TransaccionesDao();
-        String[] callback = new String[1];
+        try {
 
-        Venta venta = new Venta();
-        
-        VentaDetalle detalle = new VentaDetalle();
-        detalle.setCodigoArticulo(1);
-        detalle.setCodigoVenta(1);
-        detalle.setPrecio(new BigDecimal("4550"));
-        
-        venta.setDetalle(new ArrayList<>());
-        venta.getDetalle().add(detalle);
-        
-        dao.insertarVenta(venta, callback);
+            if (new BigDecimal(txtTotal.getText()).compareTo(BigDecimal.ZERO) == 0) {
+                JOptionPane.showMessageDialog(null, "EL monto de la factura no debe ser 0", "Error", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
 
+            TransaccionesDao dao = new TransaccionesDao();
+            String[] callback = new String[1];
 
+            Venta venta = new Venta();
+            Integer id = txtidCliente.getText().equals("") ? 0 : Integer.valueOf(txtidCliente.getText());
+            venta.setIdentificacionCliente(id);
+            venta.setNombreCliente(txtnombreCliente.getText());
+            venta.setMontoVenta(new BigDecimal(txtTotal.getText()));
+            venta.setDetalle(new ArrayList<>());
+            for (int i = 0; i < jTable1.getRowCount(); i++) {
+                Object precio = jTable1.getValueAt(i, 3);
+                Object codigo = jTable1.getValueAt(i, 0);
+
+                VentaDetalle detalle = new VentaDetalle();
+                detalle.setPrecio(new BigDecimal(precio.toString()));
+                detalle.setCodigoArticulo(Integer.valueOf(codigo.toString()));
+                venta.getDetalle().add(detalle);
+            }
+
+            if (!dao.insertarVenta(venta, callback)) {
+                JOptionPane.showMessageDialog(null, callback, "Error", JOptionPane.ERROR_MESSAGE);
+            }
+            JOptionPane.showMessageDialog(null, "Correcto");
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        }
     }//GEN-LAST:event_jBAgregar1ActionPerformed
 
     private void jTable1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable1MouseClicked

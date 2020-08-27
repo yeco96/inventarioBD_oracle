@@ -45,7 +45,7 @@ public class ArticuloDao implements CRUD<Articulo> {
             storedProcedure.registerOutParameter(3, OracleTypes.VARCHAR);
             storedProcedure.executeQuery();
 
-            String resultSet = storedProcedure.getString(2);
+            String resultSet = storedProcedure.getString(3);
             if (resultSet != null && !resultSet.equals("")) {
                 callback[0] = resultSet;
             }

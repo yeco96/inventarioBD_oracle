@@ -340,7 +340,7 @@ public class articulo extends javax.swing.JFrame {
 
         ArticuloDao articuloDao = new ArticuloDao();
         String[] callback = new String[1];
-        if (articuloDao.actualizar(articulo, callback)) {
+        if (articuloDao.insertar(articulo, callback)) {
             JOptionPane.showMessageDialog(null, callback[0]);
         } else {
             JOptionPane.showMessageDialog(null, callback[0], "Error", JOptionPane.ERROR_MESSAGE);

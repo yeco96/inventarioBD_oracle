@@ -74,3 +74,6 @@ CONSTRAINT codigoArticulo_Movimiento_FK FOREIGN KEY (codigoArticulo)
  CONSTRAINT usuarioRegistro_Movimiento_FK FOREIGN KEY (usuarioRegistro)
   REFERENCES inventario.Usuario (usuario) ENABLE);
   
+
+
+insert into Usuario values('yeco', 'Yeison', '123' );
