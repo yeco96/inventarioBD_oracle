@@ -502,19 +502,20 @@ public class compra extends javax.swing.JFrame {
             return;
         }
 
-        TransaccionesDao c = new TransaccionesDao();
+        ArticuloDao a = new ArticuloDao();
         String[] callback = new String[1];
-        //List<Compra> compra = c.insertarCompra(Integer.valueOf(txtCODArti.getText()), callback);
+        List<Articulo> articulos = a.leer(Integer.valueOf(txtCODArti.getText()), callback);
 
-        //if (compra == null || compra.isEmpty()) {
-            //JOptionPane.showMessageDialog(null, "El articulo no existe", "Error", JOptionPane.ERROR_MESSAGE);
-            //return;
-       // }
+        if (articulos == null || articulos.isEmpty()) {
+            JOptionPane.showMessageDialog(null, "El articulo no existe", "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
 
-        //cargarArticulo(articulos.get(0), Integer.valueOf(txtCant.getText()));
+        cargarArticulo(articulos.get(0), Integer.valueOf(txtCant.getText()));
 
         txtCODArti.setText(null);
         txtCant.setText(null);
+        txtCostArt.setText(null);
 
     }//GEN-LAST:event_agregarActionPerformed
 
@@ -569,6 +570,7 @@ public class compra extends javax.swing.JFrame {
         tableModel.setColumnIdentifiers(columnNames);
         jTable1.setModel(tableModel);
         jTable1.setRowHeight(30);
+       
     }
     /**
      * @param args the command line arguments
