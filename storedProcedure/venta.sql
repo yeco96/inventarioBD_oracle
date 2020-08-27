@@ -1,8 +1,10 @@
+
 CREATE OR REPLACE PROCEDURE venta_insert (
-	   factura VENTA.FACTURA%TYPE,
-	   identificacioncliente VENTA.IDENTIFICACIONCLIENTE%TYPE,
-       montoventa VENTA.MONTOVENTA%TYPE,
-       usuarioregistro VENTA.USUARIOREGISTRO%TYPE)
+	   identificacionclienteVar VENTA.IDENTIFICACIONCLIENTE%TYPE,
+       nombreClienteVar VENTA.NOMBRECLIENTE%TYPE,
+       montoventaVar VENTA.MONTOVENTA%TYPE,
+       usuarioregistroVar VENTA.USUARIOREGISTRO%TYPE,
+       P_RESULT OUT VARCHAR2)
 IS
 codigoSiguiente int;
 BEGIN
@@ -16,8 +18,15 @@ codigoSiguiente := codigoSiguiente + 1;
 end if;
 
 INSERT INTO VENTA  
-    (CODIGOVENTA, FACTURA, IDENTIFICACIONCLIENTE, MONTOVENTA,FECHAVENTA, USUARIOREGISTRO)
-    VALUES (codigoSiguiente,factura, identificacioncliente, montoventa,sysdate,usuarioregistro);
+    (CODIGOVENTA, FACTURA, IDENTIFICACIONCLIENTE,NOMBRECLIENTE, MONTOVENTA,FECHAVENTA, USUARIOREGISTRO)
+    VALUES (codigoSiguiente,codigoSiguiente, identificacionclienteVar, nombreClienteVar, montoventaVar,sysdate,usuarioregistroVar);
+    
+P_RESULT := 'codigoSiguiente:' || codigoSiguiente;  
+
+EXCEPTION
+  WHEN OTHERS THEN
+    P_RESULT := SQLCODE || SQLERRM;  
+
 
 COMMIT;  
 END;

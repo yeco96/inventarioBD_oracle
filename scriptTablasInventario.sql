@@ -1,13 +1,14 @@
+drop table articuloPrecio;
+drop table articuloExistencia;
 drop table articulo;
 drop table Proveedor;
 drop table Usuario;
-drop table articuloPrecio;
-drop table articuloExistencia;
-drop table Compra;
 drop table CompraDetalle;
-drop table Venta;
+drop table Compra;
 drop table VentaDetalle;
+drop table Venta;
 drop table Movimiento;
+
 
 create table inventario.articulo
 (codigoArticulo int, descripcion VARCHAR2(40 BYTE), cantMinima NUMBER(18,3), fechaCreacion DATE,
@@ -51,7 +52,7 @@ CONSTRAINT codigoArticulo_compra_FK FOREIGN KEY (codigoArticulo)
   REFERENCES inventario.articulo (codigoArticulo) ENABLE);
   
 create table inventario.Venta 
-(codigoVenta int, factura NUMBER(20,0), identificacionCliente NUMBER(12,0), montoVenta NUMBER(18,3),fechaVenta Date, usuarioRegistro varchar2(20 BYTE),
+(codigoVenta int, factura NUMBER(20,0), identificacionCliente NUMBER(12,0), nombreCliente varchar2(100), montoVenta NUMBER(18,3),fechaVenta Date, usuarioRegistro varchar2(20 BYTE),
 CONSTRAINT Venta_PK PRIMARY KEY (codigoVenta),
 CONSTRAINT usuarioRegistro_Venta_FK FOREIGN KEY (usuarioRegistro)
   REFERENCES inventario.Usuario (usuario) ENABLE);

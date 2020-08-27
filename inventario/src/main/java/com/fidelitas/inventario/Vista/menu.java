@@ -9,7 +9,7 @@ import com.fidelitas.inventario.Controlador.ArticuloDao;
 import com.fidelitas.inventario.Modelo.Articulo;
 import com.fidelitas.inventario.Vista.Compra.compra;
 import com.fidelitas.inventario.Vista.Proveedor.proveedor;
-import com.fidelitas.inventario.Vista.Venta.Venta;
+import com.fidelitas.inventario.Vista.Venta.VentaView;
 import com.fidelitas.inventario.Vista.articulo.articulo;
 import com.fidelitas.inventario.Vista.reportes.reportes;
 import java.math.BigDecimal;
@@ -331,7 +331,7 @@ public class menu extends javax.swing.JFrame {
 
     private void jBtnVentaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnVentaActionPerformed
         //this.setVisible(false);
-        Venta v = new Venta();
+        VentaView v = new VentaView();
         v.setResizable(false);
         v.setVisible(true);
         this.dispose();

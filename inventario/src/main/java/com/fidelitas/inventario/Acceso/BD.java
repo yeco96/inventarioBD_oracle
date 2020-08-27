@@ -22,7 +22,7 @@ import java.util.logging.Logger;
  */
 public class BD {
 
-    Connection conn;
+    public Connection conn;
 
     public BD() {
         try {

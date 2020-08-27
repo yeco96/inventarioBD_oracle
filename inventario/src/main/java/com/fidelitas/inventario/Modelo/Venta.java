@@ -17,6 +17,7 @@ public class Venta {
     private int codigoVenta;
     private int factura;
     private int identificacionCliente;
+    private String nombreCliente;
     private BigDecimal montoVenta;
     private Date fechaVenta;
     private String usuarioRegistro;
@@ -78,8 +79,14 @@ public class Venta {
     public void setDetalle(List<VentaDetalle> detalle) {
         this.detalle = detalle;
     }
-    
-   
+
+    public String getNombreCliente() {
+        return nombreCliente;
+    }
+
+    public void setNombreCliente(String nombreCliente) {
+        this.nombreCliente = nombreCliente;
+    }
     
     
 }

@@ -7,13 +7,17 @@ package com.fidelitas.inventario.Vista.Venta;
 
 import com.fidelitas.inventario.Controlador.ArticuloDao;
 import com.fidelitas.inventario.Controlador.ProveedorDao;
+import com.fidelitas.inventario.Controlador.TransaccionesDao;
 import com.fidelitas.inventario.Modelo.Articulo;
 import com.fidelitas.inventario.Modelo.Proveedor;
+import com.fidelitas.inventario.Modelo.Venta;
+import com.fidelitas.inventario.Modelo.VentaDetalle;
 import com.fidelitas.inventario.Utilidades.Render;
 import com.fidelitas.inventario.Vista.menu;
 import java.awt.Color;
 import java.math.BigDecimal;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import javax.swing.JButton;
@@ -24,12 +28,12 @@ import javax.swing.table.DefaultTableModel;
  *
  * @author Josue
  */
-public class Venta extends javax.swing.JFrame {
+public class VentaView extends javax.swing.JFrame {
 
     /**
      * Creates new form Venta
      */
-    public Venta() {
+    public VentaView() {
         initComponents();
         this.setLocationRelativeTo(null);
         SimpleDateFormat format = new SimpleDateFormat("dd-MM-yyy");
@@ -469,10 +473,23 @@ public class Venta extends javax.swing.JFrame {
     }//GEN-LAST:event_txtCantidadActionPerformed
 
     private void jBAgregar1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBAgregar1ActionPerformed
-       
+
+        TransaccionesDao dao = new TransaccionesDao();
+        String[] callback = new String[1];
+
+        Venta venta = new Venta();
         
+        VentaDetalle detalle = new VentaDetalle();
+        detalle.setCodigoArticulo(1);
+        detalle.setCodigoVenta(1);
+        detalle.setPrecio(new BigDecimal("4550"));
         
+        venta.setDetalle(new ArrayList<>());
+        venta.getDetalle().add(detalle);
         
+        dao.insertarVenta(venta, callback);
+
+
     }//GEN-LAST:event_jBAgregar1ActionPerformed
 
     private void jTable1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable1MouseClicked
