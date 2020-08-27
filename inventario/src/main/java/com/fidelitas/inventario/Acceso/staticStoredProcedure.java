@@ -39,7 +39,8 @@ public class staticStoredProcedure {
     }
     public static class compra {
 
-        public static final String crear = "{call compra_insert(?,?,?,?,?,?)}";
+        public static final String crear = "{call compra_insert( ?, ?, ?, ?, ?)}";
+        public static final String crearDetalle = "{call compraDetalle_insert(?, ?, ?, ?, ?, ?)}";
         
     }
 
